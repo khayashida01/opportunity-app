@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20180303223156) do
 
   create_table "opportunities", force: :cascade do |t|
     t.date     "date_created"
+    t.integer  "customer_id"
     t.string   "opportunity_name"
     t.text     "opportunity_description"
     t.string   "lead_source_code"
