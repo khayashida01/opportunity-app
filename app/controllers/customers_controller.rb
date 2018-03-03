@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   before_action :set_customer, only: [:edit, :update, :show, :destroy]
 
   def index
-    @customers = nil
+    @customers = Customer.all.paginate(page: params[:page], per_page: 5)
   end
   
   def search

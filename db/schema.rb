@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303213441) do
+ActiveRecord::Schema.define(version: 20180303223156) do
+
+  create_table "activities", force: :cascade do |t|
+    t.integer  "opportunity_id"
+    t.string   "activity_status"
+    t.integer  "probability"
+    t.date     "date_created"
+    t.string   "opportunity_stage_code"
+    t.string   "log_type"
+    t.date     "due_date"
+    t.integer  "employee_id"
+    t.string   "priority_code"
+    t.text     "description"
+    t.text     "comment"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "customers", force: :cascade do |t|
     t.string   "company_name"
@@ -64,6 +80,19 @@ ActiveRecord::Schema.define(version: 20180303213441) do
     t.string   "emergency_contact_email"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "opportunities", force: :cascade do |t|
+    t.date     "date_created"
+    t.string   "opportunity_name"
+    t.text     "opportunity_description"
+    t.string   "lead_source_code"
+    t.decimal  "expected_revenue_amount"
+    t.decimal  "current_expected_revenue_amount"
+    t.integer  "employee_id"
+    t.string   "opportunity_stage_code"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   create_table "users", force: :cascade do |t|

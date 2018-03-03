@@ -2,7 +2,7 @@ class EmployeesController < ApplicationController
   before_action :set_employee, only: [:edit, :update, :show, :destroy]
   
   def index
-    @employees = nil
+    @employees = Employee.all.paginate(page: params[:page], per_page: 5)
   end
   
   def search
