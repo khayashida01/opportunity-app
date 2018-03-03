@@ -1,0 +1,38 @@
+
+<% if @customers %>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">Search Result</div>
+      <div class="panel-body">
+        
+        <table class="table table-bordered table-hover table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th class="col-xs-1"></th>
+              <th class="col-xs-3">Company Name</th>
+              <th class="col-xs-2">Name</th>
+              <th class="col-xs-2">Title</th>
+              <th class="col-xs-2">Department</th>
+              <th class="col-xs-2">Tel#</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @customers.each do |customer| %>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
+                <%= link_to "Detail", edit_customer_path(customer), class: "btn btn-info btn-sm" %>
+              </td>
+              <td class="col-xs-3"><%= customer.company_name %></td>
+              <td class="col-xs-2"><%= "#{customer.contact_first_name} #{customer.contact_last_name}" %>r</td>
+              <td class="col-xs-2"><%= customer.contact_title %></td>
+              <td class="col-xs-2"><%= customer.contact_department %></td>
+              <td class="col-xs-2"><%= customer.contact_tel %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= will_paginate @customers %>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :employees
   get 'search_employees' => 'employees#search'
   
+  resources :customers
+  get 'search_customers' => 'customers#search'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

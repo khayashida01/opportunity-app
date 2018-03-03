@@ -1,0 +1,217 @@
+
+<div class="container">
+  <h3>Customer Master</h3>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">1. Account Profile</div>
+      <div class="panel-body">
+        <%= form_for(@customer, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+          <div class="form-group row">
+            <div class="col-xs-2">
+              <%= f.label :id, "Record#" %>
+              <%= f.text_field :id, class: "form-control", :readonly => true %>
+            </div>
+            <div class="col-xs-10">
+              <%= f.label :company_name, "Company Name" %>
+              <%= f.text_field :company_name, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-2">
+              <%= f.label :industory_code, "Industory" %>
+              <%= f.text_field :industory_code, class: "form-control" %>
+            </div>
+            <div class="col-xs-10">
+              <%= f.label :url, "Homepage (URL)" %>
+              <%= f.text_field :url, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <%= f.label :business_description, "Description of Business" %>
+              <%= f.text_field :business_description, class: "form-control" %>
+            </div>
+          </div>
+          
+          <hr />
+          <h4>Contact Person</h4>
+          <div class="form-group row">
+            <div class="col-xs-4">
+              <%= f.label :contact_first_name, "First Name" %>
+              <%= f.text_field :contact_first_name, class: "form-control" %>
+            </div>
+            <div class="col-xs-4">
+              <%= f.label :contact_last_name, "Last Name" %>
+              <%= f.text_field :contact_last_name, class: "form-control" %>
+            </div>
+            <div class="col-xs-4">
+              <%= f.label :contact_title, "Title" %>
+              <%= f.text_field :contact_title, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-4">
+              <%= f.label :contact_department, "Department" %>
+              <%= f.text_field :contact_department, class: "form-control" %>
+            </div>
+            <div class="col-xs-4">
+              <%= f.label :contact_tel, "Tel#" %>
+              <%= f.text_field :contact_tel, class: "form-control" %>
+            </div>
+            <div class="col-xs-4">
+              <%= f.label :contact_email, "Email" %>
+              <%= f.text_field :contact_email, class: "form-control" %>
+            </div>
+          </div>
+
+          <hr />
+          <h4>Billing Information</h4>
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <%= f.label :bill_to_street, "Street" %>
+              <%= f.text_field :bill_to_street, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-3">
+              <%= f.label :bill_to_city, "City" %>
+              <%= f.text_field :bill_to_city, class: "form-control" %>
+            </div>
+            <div class="col-xs-3">
+              <%= f.label :bill_to_state, "State" %>
+              <%= f.text_field :bill_to_state, class: "form-control" %>
+            </div>
+            <div class="col-xs-3">
+              <%= f.label :bill_to_zip_code, "Zip Code" %>
+              <%= f.text_field :bill_to_zip_code, class: "form-control" %>
+            </div>
+            <div class="col-xs-3">
+              <%= f.label :bill_to_country, "Country" %>
+              <%= f.text_field :bill_to_country, class: "form-control" %>
+            </div>
+          </div>
+
+          <hr />
+          <h4>Shipping Information</h4>
+          <div class="form-group row">
+            <div class="col-xs-6">
+              <%= f.label :ship_to_first_name, "First Name" %>
+              <%= f.text_field :ship_to_first_name, class: "form-control" %>
+            </div>
+            <div class="col-xs-6">
+              <%= f.label :ship_to_last_name, "Last Name" %>
+              <%= f.text_field :ship_to_last_name, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-6">
+              <%= f.label :ship_to_tel, "Tel#" %>
+              <%= f.text_field :ship_to_tel, class: "form-control" %>
+            </div>
+            <div class="col-xs-6">
+              <%= f.label :ship_to_email, "Email" %>
+              <%= f.text_field :ship_to_email, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <%= f.label :ship_to_street, "Street" %>
+              <%= f.text_field :ship_to_street, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-3">
+              <%= f.label :ship_to_city, "City" %>
+              <%= f.text_field :ship_to_city, class: "form-control" %>
+            </div>
+            <div class="col-xs-3">
+              <%= f.label :ship_to_state, "State" %>
+              <%= f.text_field :ship_to_state, class: "form-control" %>
+            </div>
+            <div class="col-xs-3">
+              <%= f.label :ship_to_zip_code, "Zip Code" %>
+              <%= f.text_field :ship_to_zip_code, class: "form-control" %>
+            </div>
+            <div class="col-xs-3">
+              <%= f.label :ship_to_country, "Country" %>
+              <%= f.text_field :ship_to_country, class: "form-control" %>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-xs-10">
+            <%= f.submit "Submit", class: "btn btn-primary btn-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<!--
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">2. Opportunity History</div>
+      <div class="panel-body">
+        
+        <table class="table table-bordered table-hover table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th class="col-xs-1"></th>
+              <th class="col-xs-1">Date</th>
+              <th class="col-xs-2">Company</th>
+              <th class="col-xs-2">Opportunity Name</th>
+              <th class="col-xs-1">Opportunity Stage</th>
+              <th class="col-xs-2">Current Expected Revenue Amount</th>
+              <th class="col-xs-1">Probability (%)</th>
+              <th class="col-xs-2">Expected Revenue Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Feb 12, 2018</td>
+              <td class="col-xs-2"></td>
+              <td class="col-xs-2">Sugarfina Holiday Gift Box</td>
+              <td class="col-xs-1">Registered</td>
+              <td class="col-xs-2">$ 0.00</td>
+              <td class="col-xs-1">0 %</td>
+              <td class="col-xs-2">$ 0.00</td>
+            </tr>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Feb 01, 2018</td>
+              <td class="col-xs-2">ABC Bookstore</td>
+              <td class="col-xs-2">Poly Bag</td>
+              <td class="col-xs-1">State 3: Opportunity</td>
+              <td class="col-xs-2">$ 6,000.00</td>
+              <td class="col-xs-1">60 %</td>
+              <td class="col-xs-2">$ 10,000.00</td>
+            </tr>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Jan 29, 2018</td>
+              <td class="col-xs-2">Underarmor</td>
+              <td class="col-xs-2">WPP BAG</td>
+              <td class="col-xs-1">State 2: Lead</td>
+              <td class="col-xs-2">$ 800.00</td>
+              <td class="col-xs-1">40 %</td>
+              <td class="col-xs-2">$ 2,000.00</td>
+            </tr>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Jan 29, 2018</td>
+              <td class="col-xs-2">ABC Company, Ltd.</td>
+              <td class="col-xs-2">Test Customer A</td>
+              <td class="col-xs-1">State 2: Lead</td>
+              <td class="col-xs-2">$ 2,400.00</td>
+              <td class="col-xs-1">40 %</td>
+              <td class="col-xs-2">$ 6,000.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+-->
+</div>
