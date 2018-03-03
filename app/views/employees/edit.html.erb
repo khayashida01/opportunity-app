@@ -1,0 +1,199 @@
+
+<div class="container">
+  <h3>Employee Master</h3>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">1. Basic Information</div>
+      <div class="panel-body">
+        <%= form_for(@employee, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+          <div class="form-group row">
+            <div class="col-xs-2">
+              <%= f.label :id, "Record#" %>
+              <%= f.text_field :id, class: "form-control", :readonly => true %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-4">
+              <%= f.label :first_name, "First Name" %>
+              <%= f.text_field :first_name, class: "form-control" %>
+            </div>
+            <div class="col-xs-4">
+              <%= f.label :last_name, "Last Name" %>
+              <%= f.text_field :last_name, class: "form-control" %>
+            </div>
+            <div class="col-xs-4">
+              <%= f.label :middle_name, "Middle Name" %>
+              <%= f.text_field :middle_name, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <%= f.label :email, "Email" %>
+              <%= f.text_field :email, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+              <div class="col-xs-4">
+                <%= f.label :flsa_status, "FLSA Status" %>
+                <%= f.text_field :flsa_status, class: "form-control" %>
+              </div>
+              <div class="col-xs-4">
+                <%= f.label :date_of_birth, "Date of Birth" %>
+                <%= f.text_field :date_of_birth, value:f.object.date_of_birth.try(:strftime,"%m/%d/%Y"), class: "form-control datepicker" %>
+              </div>
+              <div class="col-xs-4">
+                <%= f.label :work_location, "Work Location" %>
+                <%= f.text_field :work_location, class: "form-control" %>
+              </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <%= f.label :street, "Street" %>
+              <%= f.text_field :street, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-3">
+              <%= f.label :zip_code, "ZIP Code" %>
+              <%= f.text_field :zip_code, class: "form-control" %>
+            </div>
+            <div class="col-xs-3">
+              <%= f.label :country, "Country" %>
+              <%= f.text_field :country, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-6">
+              <%= f.label :home_tel, "Home Phone Number (Private)" %>
+              <%= f.text_field :home_tel, class: "form-control" %>
+            </div>
+            <div class="col-xs-6">
+              <%= f.label :cell_tel, "Cell Phone Number (Private)" %>
+              <%= f.text_field :cell_tel, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <%= f.label :private_email, "Email (Private)" %>
+              <%= f.text_field :private_email, class: "form-control" %>
+            </div>
+          </div>
+          <hr />
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <label class="control-label">Emergency Contact</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-xs-6">
+                  <%= f.label :emergency_contact_name, "Name" %>
+                  <%= f.text_field :emergency_contact_name, class: "form-control" %>
+                </div>
+                <div class="col-xs-3">
+                  <label class="control-label">Relation</label>
+                  <select class="form-control">
+                    <option value=""></option>
+                    <option value="">Father</option>
+                    <option value="" >Mother</option>
+                    <option value="">Husband</option>
+                    <option value="" selected>Wife</option>
+                    <option value="">Brother</option>
+                    <option value="">Sister</option>
+                    <option value="">Son</option>
+                    <option value="">Daughter</option>
+                    <option value="">Other</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-xs-6">
+                  <%= f.label :emergency_contact_tel, "Phone Number" %>
+                  <%= f.text_field :emergency_contact_tel, class: "form-control" %>
+            </div>
+            <div class="col-xs-6">
+                  <%= f.label :emergency_contact_email, "Email" %>
+                  <%= f.text_field :emergency_contact_email, class: "form-control" %>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <div class="col-xs-10">
+            <%= f.submit "Submit", class: "btn btn-primary btn-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+<!--
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">2. Opportunity History</div>
+      <div class="panel-body">
+        
+        <table class="table table-bordered table-hover table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th class="col-xs-1"></th>
+              <th class="col-xs-1">Date</th>
+              <th class="col-xs-2">Company</th>
+              <th class="col-xs-2">Opportunity Name</th>
+              <th class="col-xs-1">Opportunity Stage</th>
+              <th class="col-xs-2">Current Expected Revenue Amount</th>
+              <th class="col-xs-1">Probability (%)</th>
+              <th class="col-xs-2">Expected Revenue Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Feb 12, 2018</td>
+              <td class="col-xs-2"></td>
+              <td class="col-xs-2">Sugarfina Holiday Gift Box</td>
+              <td class="col-xs-1">Registered</td>
+              <td class="col-xs-2">$ 0.00</td>
+              <td class="col-xs-1">0 %</td>
+              <td class="col-xs-2">$ 0.00</td>
+            </tr>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Feb 01, 2018</td>
+              <td class="col-xs-2">ABC Bookstore</td>
+              <td class="col-xs-2">Poly Bag</td>
+              <td class="col-xs-1">State 3: Opportunity</td>
+              <td class="col-xs-2">$ 6,000.00</td>
+              <td class="col-xs-1">60 %</td>
+              <td class="col-xs-2">$ 10,000.00</td>
+            </tr>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Jan 29, 2018</td>
+              <td class="col-xs-2">Underarmor</td>
+              <td class="col-xs-2">WPP BAG</td>
+              <td class="col-xs-1">State 2: Lead</td>
+              <td class="col-xs-2">$ 800.00</td>
+              <td class="col-xs-1">40 %</td>
+              <td class="col-xs-2">$ 2,000.00</td>
+            </tr>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;"><button type="button" class="btn btn-info btn-sm">Detail</button></td>
+              <td class="col-xs-1">Jan 29, 2018</td>
+              <td class="col-xs-2">ABC Company, Ltd.</td>
+              <td class="col-xs-2">Test Customer A</td>
+              <td class="col-xs-1">State 2: Lead</td>
+              <td class="col-xs-2">$ 2,400.00</td>
+              <td class="col-xs-1">40 %</td>
+              <td class="col-xs-2">$ 6,000.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+-->
+</div>

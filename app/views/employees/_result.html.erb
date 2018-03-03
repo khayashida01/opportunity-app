@@ -1,0 +1,38 @@
+
+<% if @employees %>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">Search Result</div>
+      <div class="panel-body">
+        
+        <table class="table table-bordered table-hover table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th class="col-xs-1"></th>
+              <th class="col-xs-3">Name</th>
+              <th class="col-xs-1">FLSA Status</th>
+              <th class="col-xs-2">DOH</th>
+              <th class="col-xs-3">Email (Private)</th>
+              <th class="col-xs-2">Cell Phone Number (Private)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @employees.each do |employee| %>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
+                <%= link_to "Detail", edit_employee_path(employee), class: "btn btn-info btn-sm" %>
+              </td>
+              <td class="col-xs-3"><%= employee.full_name %></td>
+              <td class="col-xs-1"><%= employee.flsa_status %></td>
+              <td class="col-xs-2"><%= employee.date_of_birth %></td>
+              <td class="col-xs-3"><%= employee.private_email %></td>
+              <td class="col-xs-2"><%= employee.cell_tel %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= will_paginate @employees %>
+      </div>
+    </div>
+  </div>
+<% end %>

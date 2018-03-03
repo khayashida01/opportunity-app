@@ -11,7 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303170828) do
+ActiveRecord::Schema.define(version: 20180303180537) do
+
+  create_table "employees", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "middle_name"
+    t.string   "email"
+    t.string   "flsa_status"
+    t.date     "date_of_birth"
+    t.string   "work_location"
+    t.string   "street"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
+    t.string   "country"
+    t.string   "home_tel"
+    t.string   "cell_tel"
+    t.string   "private_email"
+    t.string   "emergency_contact_name"
+    t.string   "emergency_relation_code"
+    t.string   "emergency_contact_tel"
+    t.string   "emergency_contact_email"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
