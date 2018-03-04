@@ -3,6 +3,8 @@ class Employee < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   
+  belongs_to :relation, foreign_key: :emergency_relation_id
+  
   def full_name
     return "#{first_name} #{last_name}".strip if (first_name || last_name)
     "Anonymous"

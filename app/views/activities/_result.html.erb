@@ -1,0 +1,38 @@
+
+<% if @activities %>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">Search Result</div>
+      <div class="panel-body">
+        
+        <table class="table table-bordered table-hover table-sm">
+          <thead class="thead-light">
+            <tr>
+              <th class="col-xs-1"></th>
+              <th class="col-xs-1">Date</th>
+              <th class="col-xs-2">Opportunity Name</th>
+              <th class="col-xs-1">Opportunity Stage</th>
+              <th class="col-xs-1">Due Date</th>
+              <th class="col-xs-1">Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @activities.each do |activity| %>
+            <tr>
+              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
+                <%= link_to "Detail", activity_path(activity), class: "btn btn-info btn-sm" %>
+              </td>
+              <td class="col-xs-1"><%= activity.date_created %></td>
+              <td class="col-xs-2"></td>
+              <td class="col-xs-1"></td>
+              <td class="col-xs-1"><%= activity.due_date %></td>
+              <td class="col-xs-1"><%= activity.priority_code %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <%= will_paginate @activities %>
+      </div>
+    </div>
+  </div>
+<% end %>

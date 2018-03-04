@@ -14,4 +14,12 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
+//= require bootstrap-datepicker
+//= require Chart.min
 //= require_tree .
+
+$(document).on('turbolinks:load', function(){
+  $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+}).on('dp.error', function(e) {
+  $(e.target).val('');
+});

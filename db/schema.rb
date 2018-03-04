@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303223156) do
+ActiveRecord::Schema.define(version: 20180304052658) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "opportunity_id"
@@ -75,11 +75,11 @@ ActiveRecord::Schema.define(version: 20180303223156) do
     t.string   "cell_tel"
     t.string   "private_email"
     t.string   "emergency_contact_name"
-    t.string   "emergency_relation_code"
     t.string   "emergency_contact_tel"
     t.string   "emergency_contact_email"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "emergency_relation_id"
   end
 
   create_table "opportunities", force: :cascade do |t|
@@ -94,6 +94,12 @@ ActiveRecord::Schema.define(version: 20180303223156) do
     t.string   "opportunity_stage_code"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+  end
+
+  create_table "relations", force: :cascade do |t|
+    t.string   "relation_name"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade do |t|

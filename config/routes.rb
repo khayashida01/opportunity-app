@@ -9,6 +9,10 @@ Rails.application.routes.draw do
   get 'search_customers' => 'customers#search'
   
   resources :opportunities
+  get 'search_opportunities' => 'opportunities#search'
+  
+  resources :activities
+  get 'search_activities' => 'activities#search'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

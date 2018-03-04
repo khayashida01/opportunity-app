@@ -58,6 +58,6 @@ class EmployeesController < ApplicationController
     def employee_params
       params.require(:employee).permit(:first_name, :last_name, :middle_name, :email, :flsa_status, :date_of_birth, :work_location,
                                         :street, :zip_code, :country, :home_tel, :cell_tel, :private_email, :emergency_contact_name,
-                                        :emergency_contact_tel, :emergency_contact_email)
+                                        :emergency_relation_id, :emergency_contact_tel, :emergency_contact_email)
     end
 end

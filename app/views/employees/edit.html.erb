@@ -1,3 +1,4 @@
+<%= render 'shared/errors', obj: @employee %>
 
 <div class="container">
   <h3>Employee Master</h3>
@@ -39,7 +40,7 @@
               </div>
               <div class="col-xs-4">
                 <%= f.label :date_of_birth, "Date of Birth" %>
-                <%= f.text_field :date_of_birth, value:f.object.date_of_birth.try(:strftime,"%m/%d/%Y"), class: "form-control datepicker" %>
+                <%= f.text_field :date_of_birth, value:f.object.date_of_birth.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %>
               </div>
               <div class="col-xs-4">
                 <%= f.label :work_location, "Work Location" %>
@@ -92,19 +93,8 @@
                   <%= f.text_field :emergency_contact_name, class: "form-control" %>
                 </div>
                 <div class="col-xs-3">
-                  <label class="control-label">Relation</label>
-                  <select class="form-control">
-                    <option value=""></option>
-                    <option value="">Father</option>
-                    <option value="" >Mother</option>
-                    <option value="">Husband</option>
-                    <option value="" selected>Wife</option>
-                    <option value="">Brother</option>
-                    <option value="">Sister</option>
-                    <option value="">Son</option>
-                    <option value="">Daughter</option>
-                    <option value="">Other</option>
-                  </select>
+                  <%= f.label :emergency_relation_id, "Relation" %>
+                  <%= f.collection_select :emergency_relation_id, Relation.all, :id, :relation_name, {:include_blank => true}, {class: 'form-control'} %>
                 </div>
               </div>
             </div>
