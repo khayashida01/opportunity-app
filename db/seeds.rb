@@ -15,3 +15,4 @@ Relation.create(relation_name: "Sister")
 Relation.create(relation_name: "Son")
 Relation.create(relation_name: "Daughter")
 Relation.create(relation_name: "Other")
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
