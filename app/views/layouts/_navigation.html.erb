@@ -31,16 +31,17 @@
               </ul>
             </li>
           </ul>
-          <ul class="nav navbar-nav col-md-1">
+          <ul class="nav navbar-nav col-md-2">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Quotation <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><%= link_to "Quotation Request Entry", welcome_test_path %></li>
+                <li><%= link_to "Quotations", quotations_path %></li>
+                <li><%= link_to "Add New Quotation", new_quotation_path %></li>
               </ul>
             </li>
           </ul>
           
-          <ul class="nav navbar-right col-md-4">
+          <ul class="nav navbar-right col-md-3">
             <li class="col-md-8 user-name text-right">
               <i class="fa fa-user"></i>
               <%#= current_user.full_name.present? ? current_user.full_name : current_user.email %>

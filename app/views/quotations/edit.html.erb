@@ -1,0 +1,395 @@
+
+<div class="container test">
+  <h3>Quotation Request Sheet</h3>
+  <%= form_for(@quotation, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+  <div class="row">
+          <div class="form-group">
+            <div class="col-xs-10">
+            <%= submit_tag "Submit", class: "btn btn-primary btn-sm" %>
+            </div>
+          </div>
+  </div><br />
+  <div class="row">
+    <div class="flexbox">
+      <ul>
+        <li class="lbl"><%= f.label :date_created, "Date" %></li>
+        <!--<li><input type="text" value="2018/02/02" size="10"/></li>-->
+        <li><%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "datepicker", data:{ provide:'datepicker' }, size: '10' %></li>
+        
+        <li class="lbl"><%= f.label :sales, "Sales" %></li>
+        <!--<li><input type="text" value="" size="10"/></li>-->
+        <li><%= f.text_field :sales, size: '10' %></li>
+        
+        <li class="lbl"><%= f.label :customer_id, "Customer" %></li>
+        <!--<li><input type="text" value="" size="10"/></li>-->
+        <li><%= f.collection_select :customer_id, Customer.all, :id, :company_name, {:include_blank => true} %></li>
+        
+        <li class="lbl"><%= f.label :description, "Description" %></li>
+        <!--<li class="flexible"><input type="text" value="" size="10"/></li>-->
+        <li><%= f.text_field :description, size: '10' %></li>
+      </ul>
+    </div>
+    <div class="flexbox">
+      <ul>
+        <li class="lbl">Rev.</li>
+        <!--<li><input type="text" value="" size="4"/></li>-->
+        <li><%= f.text_field :revision, size: '4' %></li>
+        
+        <li class="lbl">FOB/CIF</li>
+        <!--<li><select><option></option><option>FOB</option><option>CIF</option></select></li>-->
+        <li><%= f.select :fob_cif_code, [["", ""], ["FOB", "01"], ["CIF", "02"]] %></li>
+        
+        <li class="lbl">Port</li>
+        <!--<li><input type="text" value="" size="10"/></li>-->
+        <li><%= f.text_field :port, size: '10' %></li>
+        
+        <li class="lbl">qty allowance</li>
+        <!--<li><select><option></option>
+                    <option>+/-</option>
+                    <option>no unders +</option>
+                    <option>no overs -</option>
+            </select>
+        </li>-->
+        <li><%= f.select :quantity_allowance_code, [["", ""], ["+/-", "01"], ["no unders +", "02"], ["no overs -", "02"]] %></li>
+        
+        <!--<li><input type="text" value="" size="10"/></li>-->
+        <li><%= f.text_field :quantity_allowance, size: '10' %></li>
+        
+        <li class="lbl">frequency of shipment</li>
+        <!--<li class="flexible"><input type="text" value="" size="10"/></li>-->
+        <li><%= f.text_field :frequency_of_shipment, size: '10' %></li>
+      </ul>
+    </div>
+    <!--
+    <div class="flexbox">
+      <ul>
+        <li class="lbl">reference</li>
+        <li class="flexible">
+            <label class="checkbox-inline"><input type="checkbox">sample</label>
+            <label class="checkbox-inline"><input type="checkbox">photo</label>
+            <label class="checkbox-inline"><input type="checkbox">artwork</label>
+            <label class="checkbox-inline"><input type="checkbox">other</label>
+        </li>
+      </ul>
+    </div>
+    -->
+  </div>
+  
+  <br />
+  <!--
+  <div class="row">
+    <div class="flexbox">
+      <ul>
+        <li class="lbl" style="height:55px;">Style</li>
+        <li style="height:55px;"><select><option></option>
+                    <option>Bottom sealed w/o gusset</option>
+                    <option>Side sealed w/o gusset</option>
+                    <option>Bottom sealed w/ gusset</option>
+                    <option>Side sealed w/ gusset</option>
+            </select>
+        </li>
+        <li class="lbl" style="height:55px;">Size</li>
+        <li style="height:55px;">
+          <table>
+            <tbody>
+              <tr>
+                <td rowspan="2" class="lbl">W</td>
+                <td><input type="text" value="" size="4" id="txt_in_1"/></td>
+                <td class="lbl">In</td>
+                <td rowspan="2" class="lbl">H</td>
+                <td><input type="text" value="" size="4" id="txt_in_2"/></td>
+                <td class="lbl">In</td>
+                <td rowspan="2" class="lbl">SG</td>
+                <td><input type="text" value="" size="4" id="txt_in_3"/></td>
+                <td class="lbl">In</td>
+                <td rowspan="2" class="lbl">BG</td>
+                <td><input type="text" value="" size="4" id="txt_in_4"/></td>
+                <td class="lbl">In</td>
+                <td rowspan="2" class="lbl">TT</td>
+                <td><input type="text" value="" size="4" id="txt_in_5"/></td>
+                <td class="lbl">In</td>
+              </tr>
+              <tr>
+                <td><input type="text" value="0" size="4" id="txt_out_1"/></td>
+                <td class="lbl">mm</td>
+                <td><input type="text" value="0" size="4" id="txt_out_2"/></td>
+                <td class="lbl">mm</td>
+                <td><input type="text" value="0" size="4" id="txt_out_3"/></td>
+                <td class="lbl">mm</td>
+                <td><input type="text" value="0" size="4" id="txt_out_4"/></td>
+                <td class="lbl">mm</td>
+                <td><input type="text" value="0" size="4" id="txt_out_5"/></td>
+                <td class="lbl">mm</td>
+              </tr>
+            </tbody>
+          </table>
+        </li>
+        <li class="lbl" style="height:55px;">WT/pc</li>
+        <li class="flexible" style="height:55px;display:flex;  align-Items:flex-end;"><input type="text" value="" size="4"/>
+          <div style="">g</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="flexbox">
+      <ul>
+        <li class="lbl" style="text-align:center; height:130px; width:80px;">Material</li>
+        <li class="flexible" style="height:130px;">
+          <div>
+            <ul>
+              <li class="lbl">Layer</li>
+              <li><select><option></option>
+                          <option>Single layer</option>
+                          <option>Double wall</option>
+                          <option>Co-ex</option>
+                  </select>
+              </li>
+            </ul>
+          </div>
+          <div>
+          <table>
+            <tbody>
+              <tr>
+                <td class="lbl"></td>
+                <td class="lbl">material</td>
+                <td class="lbl" colspan="3">thickness</td>
+                <td class="lbl">color</td>
+                <td class="lbl">reference</td>
+              </tr>
+              <tr>
+                <td class="lbl">Base</td>
+                <td><select><option></option>
+                            <option>Same as sample</option>
+                            <option>LDPE</option>
+                            <option>HDPE</option>
+                            <option>CPE(=Nashiji)</option>
+                            <option>OPP</option>
+                            <option>CPP</option>
+                            <option>PVC</option>
+                            <option>Others(Please see notes)</option>
+                            <option>Blend (Please see notes)</option>
+                    </select>
+                </td>
+                <td><input type="text" value="0" size="4"/></td>
+                <td class="lbl">mil</td>
+                <td style="align-Items:flex-end;display:flex;height:25px;"><input type="text" value="0" size="4"/><div>mic</div></td>
+                <td><input type="text" value="" size="4"/></td>
+                <td><select><option></option>
+                            <option>Same as sample</option>
+                            <option>PMS</option>
+                            <option>See notes</option>
+                    </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">Other layer</td>
+                <td><select><option></option>
+                            <option>Same as sample</option>
+                            <option>LDPE</option>
+                            <option>HDPE</option>
+                            <option>CPE(=Nashiji)</option>
+                            <option>OPP</option>
+                            <option>CPP</option>
+                            <option>PVC</option>
+                            <option>Others(Please see notes)</option>
+                            <option>Blend (Please see notes)</option>
+                    </select>
+                </td>
+                <td><input type="text" value="0" size="4"/></td>
+                <td class="lbl">mil</td>
+                <td style="align-Items:flex-end;display:flex;height:25px;"><input type="text" value="0" size="4"/><div>mic</div></td>
+                <td><input type="text" value="" size="4"/></td>
+                <td><select><option></option>
+                            <option>Same as sample</option>
+                            <option>PMS</option>
+                            <option>See notes</option>
+                    </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="lbl">notes</td>
+                <td colspan="6"><input type="text" value="" size="4"/></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="flexbox">
+      <ul>
+        <li class="lbl" style="text-align:center; height:130px; width:80px;">Print</li>
+        <li class="flexible" style="height:130px;">
+          <div>
+            <ul>
+              <li class="lbl">side(s)</li>
+              <li><select><option></option>
+                          <option>1 side</option>
+                          <option>2 sides</option>
+                          <option>NO Print</option>
+                  </select>
+              </li>
+              <li class="lbl">method</li>
+              <li><select><option></option>
+                          <option>Gravure</option>
+                          <option>Flexo</option>
+                          <option>Silk screen</option>
+                  </select>
+              </li>
+              <li class="lbl">design</li>
+              <li><select><option></option>
+                          <option>Both are same</option>
+                          <option>Both are different</option>
+                  </select>
+              </li>
+              <li class="lbl">color(s)</li>
+              <li><input type="text" value="" size="4"/></li>
+              <li>color(s)   /  </li>
+              <li><input type="text" value="" size="4"/></li>
+              <li>color(s)</li>
+            </ul>
+          </div>
+          <div>
+          <table>
+            <tbody>
+              <tr>
+                <td class="lbl"></td>
+                <td class="lbl">1</td>
+                <td class="lbl">2</td>
+                <td class="lbl">3</td>
+                <td class="lbl">4</td>
+                <td class="lbl">5</td>
+                <td class="lbl">6</td>
+                <td class="lbl">7</td>
+                <td class="lbl">8</td>
+                <td class="lbl">9</td>
+                <td class="lbl">10</td>
+              </tr>
+              <tr>
+                <td class="lbl">color</td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+              </tr>
+              <tr>
+                <td class="lbl">coverage</td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+                <td><select><option></option><option>PMS</option><option>4C Process</option><option>Metalic</option><option>Varnish</option></select></td>
+              </tr>
+              <tr>
+                <td class="lbl">notes</td>
+                <td colspan="10"><input type="text" value="" size="4"/></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="flexbox">
+      <ul>
+        <li class="lbl" style="text-align:center; height:110px; width:80px;">FOR poly mailer</li>
+        <li class="flexible" style="height:110px;">
+          <div>
+            <ul>
+              <li class="lbl" style="width:100px;">Flap(Lip)</li>
+              <li class="lbl" style="width:50px;">length</li>
+              <li><input type="text" value="" size="4"/></li>
+              <li style="width:40px;">mm</li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li class="lbl" style="width:100px;">Adhesive</li>
+              <li class="lbl" style="width:50px;">width</li>
+              <li><input type="text" value="" size="4"/></li>
+              <li style="width:40px;">mm</li>
+              <li class="lbl" style="width:50px;">type</li>
+              <li><input type="text" value="" size="4"/></li>
+              <li class="lbl" style="width:50px;">qty</li>
+              <li><input type="text" value="" size="4"/></li>
+              <li class="lbl" style="width:50px;">lines</li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li class="lbl" style="width:100px;">release liner</li>
+              <li class="lbl" style="width:50px;">width</li>
+              <li><input type="text" value="" size="4"/></li>
+              <li style="width:40px;">mm</li>
+              <li class="lbl" style="width:50px;">color</li>
+              <li><input type="text" value="" size="4"/></li>
+            </ul>
+          </div>
+          <div>
+            <ul>
+              <li class="lbl" style="width:100px;">perforation</li>
+              <li class="lbl" style="width:50px;">qty</li>
+              <li><input type="text" value="" size="4"/></li>
+              <li style="width:40px;">lines</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="flexbox">
+      <ul>
+        <li class="lbl" style="text-align:center; height:150px; width:80px;"></li>
+        <li class="flexible" style="height:150px;">
+          <div>
+          <table>
+            <tbody>
+              <tr>
+                <td class="lbl" style="width:500px;">Type (copy & paste from sheet2)</td>
+                <td class="lbl" style="width:500px;">notes</td>
+              </tr>
+              <tr>
+                <td><textarea rows="8" style="width:500px;"></textarea></td>
+                <td><textarea rows="8" style="width:500px;"></textarea></td>
+              </tr>
+            </tbody>
+          </table>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  -->
+  <% end %>
+  <br /><br />
+</div>
+<script type="text/javascript">
+var rate = 25.4;
+
+$('[id^="txt_in_"]').change(function(){
+  var val = $(this).val();
+  var num = $(this).attr("id").split("_")[2];
+  $("#txt_out_" + num).val(val * rate);
+});
+
+</script>

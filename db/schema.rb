@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180401220406) do
+ActiveRecord::Schema.define(version: 20180402033339) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -127,6 +127,22 @@ ActiveRecord::Schema.define(version: 20180401220406) do
     t.string   "opportunity_stage_code"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+  end
+
+  create_table "quotations", force: :cascade do |t|
+    t.date     "date_created"
+    t.string   "sales"
+    t.integer  "customer_id"
+    t.text     "description"
+    t.integer  "revision"
+    t.string   "fob_cif_code"
+    t.string   "port"
+    t.string   "quantity_allowance_code"
+    t.string   "frequency_of_shipment"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "quotation_status_id"
+    t.integer  "quantity_allowance"
   end
 
   create_table "relations", force: :cascade do |t|
