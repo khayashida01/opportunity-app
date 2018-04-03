@@ -5,11 +5,22 @@
   <div class="row">
           <div class="form-group">
             <div class="col-xs-10">
-            <%= submit_tag "Submit", class: "btn btn-primary btn-sm" %>
+              <% if !@quotation.id %>
+              <%= submit_tag "Create", class: "btn btn-primary btn-sm" %>
+              <% elsif @quotation.quotation_status_id == 0 %>
+              <%= submit_tag "Update", name: "update", class: "btn btn-primary btn-sm" %>
+              <%= submit_tag "Submit", name: "submit", class: "btn btn-primary btn-sm" %>
+              <% end %>
             </div>
           </div>
   </div><br />
   <div class="row">
+    <div class="flexbox">
+      <ul>
+        <li class="lbl"><%= f.label :quotation_status_id, "Status" %></li>
+        <li><%= get_quotation_status_name(@quotation.quotation_status_id) %></li>
+      </ul>
+    </div>
     <div class="flexbox">
       <ul>
         <li class="lbl"><%= f.label :date_created, "Date" %></li>

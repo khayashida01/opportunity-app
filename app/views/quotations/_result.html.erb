@@ -9,28 +9,22 @@
           <thead class="thead-light">
             <tr>
               <th class="col-xs-1"></th>
+              <th class="col-xs-1">Status</th>
               <th class="col-xs-1">Date</th>
               <th class="col-xs-2">Company</th>
-              <th class="col-xs-2">Opportunity Name</th>
-              <th class="col-xs-1">Opportunity Stage</th>
-              <th class="col-xs-2">Current Expected Revenue Amount</th>
-              <th class="col-xs-1">Probability (%)</th>
-              <th class="col-xs-2">Expected Revenue Amount</th>
+              <th class="col-xs-2">Description</th>
             </tr>
           </thead>
           <tbody>
-            <% @quotations.each do |opportunity| %>
+            <% @quotations.each do |quotation| %>
             <tr>
               <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
-                <%= link_to "Detail", opportunity_path(opportunity), class: "btn btn-info btn-sm" %>
+                <%= link_to "Detail", quotation_path(quotation), class: "btn btn-info btn-sm" %>
               </td>
-              <td class="col-xs-1"><%= opportunity.date_created %></td>
-              <td class="col-xs-2"></td>
-              <td class="col-xs-2"><%= opportunity.opportunity_name %></td>
-              <td class="col-xs-1"><%= opportunity.opportunity_stage_code %></td>
-              <td class="col-xs-2"><%= opportunity.current_expected_revenue_amount %></td>
-              <td class="col-xs-1"></td>
-              <td class="col-xs-2"><%= opportunity.expected_revenue_amount %></td>
+              <td class="col-xs-1"><%= get_quotation_status_name(quotation.quotation_status_id) %></td>
+              <td class="col-xs-1"><%= quotation.date_created %></td>
+              <td class="col-xs-2"><%= quotation.customer.company_name %></td>
+              <td class="col-xs-2"><%= quotation.description %></td>
             </tr>
             <% end %>
           </tbody>
