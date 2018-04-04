@@ -7,12 +7,20 @@ class QuotationsController < ApplicationController
   def search
     @quotation_search_text = params[:quotation_search_text]
     @quotations = nil
+    
+    if current_user.employee?
+      status = [ApplicationHelper::QUOTATION_STATUS_NEW, ApplicationHelper::QUOTATION_STATUS_SUBMITTED, 
+                ApplicationHelper::QUOTATION_STATUS_REVIEWED, ApplicationHelper::QUOTATION_STATUS_REJECTED, ApplicationHelper::QUOTATION_STATUS_APPROVED]
+    else
+      status = [ApplicationHelper::QUOTATION_STATUS_SUBMITTED, ApplicationHelper::QUOTATION_STATUS_REVIEWED]
+    end
+    
     if @quotation_search_text.blank?
       #flash.now[:danger] = "Please enter search string"
       #@employees = Employee.search(params[:employee_search_text])
-      @quotations = Quotation.where("description LIKE ?", "%#{@quotation_search_text}%").paginate(page: params[:page], per_page: 5)
+      @quotations = Quotation.where("description LIKE ? AND quotation_status_id IN (?)", "%#{@quotation_search_text}%", status).paginate(page: params[:page], per_page: 5)
     else
-      @quotations = Quotation.where("description LIKE ?", "%#{@quotation_search_text}%").paginate(page: params[:page], per_page: 5)
+      @quotations = Quotation.where("description LIKE ? AND quotation_status_id IN (?)", "%#{@quotation_search_text}%", status).paginate(page: params[:page], per_page: 5)
       if @quotations.empty?
         @quotations = nil
         flash.now[:danger] = "No quotation found"
@@ -22,17 +30,18 @@ class QuotationsController < ApplicationController
   end
   
   def show
+    @quotation.quotation_comments.build()
     render 'edit'
   end
 
   def new
     @quotation = Quotation.new
+    @quotation.quotation_status_id = 0
     render 'edit'
   end
   
   def create
     @quotation = Quotation.new(quotation_params)
-    @quotation.quotation_status_id = 0
     if @quotation.save
       flash[:success] = "Quotation has been created successfully"
     end
@@ -40,15 +49,30 @@ class QuotationsController < ApplicationController
   end
   
   def update
-    if params[:submit]
-      @quotation.quotation_status_id = 1
-    end
-    
-    if @quotation.update(quotation_params)
-      flash.now[:success] = "Quotation has been updated successfully"
-      render 'edit'
+    if params[:quotation_comment]
+      if @quotation.update(quotation_params)
+        flash.now[:success] = "Quotation has been updated successfully"
+        render 'edit'
+      else
+        render 'edit'
+      end
     else
-      render 'edit'
+      if params[:submit]
+        @quotation.quotation_status_id = 1
+      elsif params[:review]
+        @quotation.quotation_status_id = 2
+      elsif params[:reject]
+        @quotation.quotation_status_id = 3
+      elsif params[:approve]
+        @quotation.quotation_status_id = 4
+      end
+      
+      if @quotation.update(quotation_params)
+        flash.now[:success] = "Quotation has been updated successfully"
+        render 'edit'
+      else
+        render 'edit'
+      end
     end
   end
 
@@ -61,7 +85,8 @@ class QuotationsController < ApplicationController
     params.require(:quotation).permit(:quotation_id, :date_created, :sales, :customer_id, :description, :revision,
                                       :fob_cif_code, :port, :quantity_allowance_code, :quantity_allowance,
                                       :frequency_of_shipment,
-                                      :commit)
+                                      :commit,
+                                      quotation_comments_attributes: [:id, :comment])
   end
 
 end

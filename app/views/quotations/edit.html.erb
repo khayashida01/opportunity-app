@@ -5,70 +5,69 @@
   <div class="row">
           <div class="form-group">
             <div class="col-xs-10">
-              <% if !@quotation.id %>
+            <% if !@quotation.id %>
               <%= submit_tag "Create", class: "btn btn-primary btn-sm" %>
-              <% elsif @quotation.quotation_status_id == 0 %>
+            <% elsif @quotation.quotation_status_id == 0 %>
               <%= submit_tag "Update", name: "update", class: "btn btn-primary btn-sm" %>
               <%= submit_tag "Submit", name: "submit", class: "btn btn-primary btn-sm" %>
-              <% end %>
+            <% elsif @quotation.quotation_status_id == 1 && current_user.supplier? %>
+              <%= submit_tag "Submit", name: "review", class: "btn btn-primary btn-sm" %>
+            <% elsif @quotation.quotation_status_id == 2 && current_user.employee? %>
+              <%= submit_tag "Re-Submit", name: "review", class: "btn btn-primary btn-sm" %>
+              <%= submit_tag "Approve", name: "approve", class: "btn btn-primary btn-sm" %>
+              <%= submit_tag "Reject", name: "reject", class: "btn btn-primary btn-sm" %>
+            <% end %>
             </div>
           </div>
   </div><br />
   <div class="row">
     <div class="flexbox">
       <ul>
-        <li class="lbl"><%= f.label :quotation_status_id, "Status" %></li>
-        <li><%= get_quotation_status_name(@quotation.quotation_status_id) %></li>
+        <li class="lbl col-xs-1"><%= f.label :quotation_status_id, "Status" %></li>
+        <li class="col-xs-2"><%= get_quotation_status_name(@quotation.quotation_status_id) %></li>
       </ul>
     </div>
     <div class="flexbox">
       <ul>
-        <li class="lbl"><%= f.label :date_created, "Date" %></li>
+        <li class="lbl col-xs-1"><%= f.label :date_created, "Date" %></li>
         <!--<li><input type="text" value="2018/02/02" size="10"/></li>-->
-        <li><%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "datepicker", data:{ provide:'datepicker' }, size: '10' %></li>
+        <li class="col-xs-2"><%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "datepicker", data:{ provide:'datepicker' }, size: '10' %></li>
         
-        <li class="lbl"><%= f.label :sales, "Sales" %></li>
+        <li class="lbl col-xs-1"><%= f.label :sales, "Sales" %></li>
         <!--<li><input type="text" value="" size="10"/></li>-->
-        <li><%= f.text_field :sales, size: '10' %></li>
+        <li class="col-xs-2"><%= f.text_field :sales, size: '10' %></li>
         
-        <li class="lbl"><%= f.label :customer_id, "Customer" %></li>
+        <li class="lbl col-xs-1"><%= f.label :customer_id, "Customer" %></li>
         <!--<li><input type="text" value="" size="10"/></li>-->
-        <li><%= f.collection_select :customer_id, Customer.all, :id, :company_name, {:include_blank => true} %></li>
-        
-        <li class="lbl"><%= f.label :description, "Description" %></li>
-        <!--<li class="flexible"><input type="text" value="" size="10"/></li>-->
-        <li><%= f.text_field :description, size: '10' %></li>
+        <li class="col-xs-2"><%= f.collection_select :customer_id, Customer.all, :id, :company_name, {:include_blank => true} %></li>
       </ul>
     </div>
     <div class="flexbox">
       <ul>
-        <li class="lbl">Rev.</li>
-        <!--<li><input type="text" value="" size="4"/></li>-->
-        <li><%= f.text_field :revision, size: '4' %></li>
+        <li class="lbl col-xs-1"><%= f.label :description, "Description" %></li>
+        <li class="col-xs-8"><%= f.text_field :description%></li>
+      </ul>
+    </div>
+    <div class="flexbox">
+      <ul>
+        <li class="lbl col-xs-1">Rev.</li>
+        <li class="col-xs-2"><%= f.text_field :revision, size: '4' %></li>
         
-        <li class="lbl">FOB/CIF</li>
-        <!--<li><select><option></option><option>FOB</option><option>CIF</option></select></li>-->
-        <li><%= f.select :fob_cif_code, [["", ""], ["FOB", "01"], ["CIF", "02"]] %></li>
+        <li class="lbl col-xs-1">FOB/CIF</li>
+        <li class="col-xs-2"><%= f.select :fob_cif_code, [["", ""], ["FOB", "01"], ["CIF", "02"]] %></li>
         
-        <li class="lbl">Port</li>
-        <!--<li><input type="text" value="" size="10"/></li>-->
-        <li><%= f.text_field :port, size: '10' %></li>
+        <li class="lbl col-xs-1">Port</li>
+        <li class="col-xs-2"><%= f.text_field :port, size: '10' %></li>
+      </ul>
+    </div>
+    <div class="flexbox">
+      <ul>
+        <li class="lbl col-xs-1">qty allowance</li>
+        <li class="col-xs-1"><%= f.select :quantity_allowance_code, [["", ""], ["+/-", "01"], ["no unders +", "02"], ["no overs -", "02"]] %></li>
+        <li class="col-xs-1"><%= f.text_field :quantity_allowance, size: '10' %></li>
         
-        <li class="lbl">qty allowance</li>
-        <!--<li><select><option></option>
-                    <option>+/-</option>
-                    <option>no unders +</option>
-                    <option>no overs -</option>
-            </select>
-        </li>-->
-        <li><%= f.select :quantity_allowance_code, [["", ""], ["+/-", "01"], ["no unders +", "02"], ["no overs -", "02"]] %></li>
-        
-        <!--<li><input type="text" value="" size="10"/></li>-->
-        <li><%= f.text_field :quantity_allowance, size: '10' %></li>
-        
-        <li class="lbl">frequency of shipment</li>
-        <!--<li class="flexible"><input type="text" value="" size="10"/></li>-->
-        <li><%= f.text_field :frequency_of_shipment, size: '10' %></li>
+        <li class="lbl col-xs-2">frequency of shipment</li>
+        <li class="col-xs-2"><%= f.text_field :frequency_of_shipment, size: '10' %></li>
       </ul>
     </div>
     <!--
@@ -391,27 +390,32 @@
     </div>
   </div>
   -->
-  <% end %>
   
+  <% end %>
   <br /><br />
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="font-weight:bold;">Test Comment</div>
-      <div class="panel-body">
-        Test comment this is a .
-        
+  <% if @quotation.quotation_comments %>
+    <% @quotation.quotation_comments.each do |quotation_comment| %>
+      <%= form_for(quotation_comment, :html => {class: "form-horizontal", role: "form"}) do |fi| %>
+      <div class="row col-xs-offset-1 col-xs-8">
+        <div class="panel panel-default">
+          <div class="panel-heading" style="font-weight:bold;">
+            <% if quotation_comment.user %>
+              <%= quotation_comment.user.email %>&nbsp;&nbsp;<small>(last updated: <%= time_ago_in_words(quotation_comment.updated_at) %> ago)</small>
+            <% else %>
+              Comment
+            <% end %>
+          </div>
+          <div class="panel-body">
+            <%= fi.text_area :comment, rows: 4, class: "form-control", readonly: (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
+          </div>
+          <%= fi.hidden_field :quotation_id, value: quotation_comment.quotation_id %>
+          <%= submit_tag "Submit", class: "btn btn-primary btn-sm" unless (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
+        </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="font-weight:bold;">Test Comment</div>
-      <div class="panel-body">
-        Test comment this is a .
-        
-      </div>
-    </div>
-  </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
   <br /><br />
 </div>
 <script type="text/javascript">
