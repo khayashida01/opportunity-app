@@ -403,16 +403,22 @@
         <div class="panel panel-default">
           <div class="panel-heading" style="font-weight:bold;">
             <% if quotation_comment.user %>
-              <%= quotation_comment.user.email %>&nbsp;&nbsp;<small>(last updated: <%= time_ago_in_words(quotation_comment.updated_at) %> ago)</small>
+              <%= quotation_comment.user.email %>&nbsp;&nbsp;<small>(<%= time_ago_in_words(quotation_comment.updated_at) %> ago)</small>
             <% else %>
               Comment
             <% end %>
           </div>
           <div class="panel-body">
-            <%= fi.text_area :comment, rows: 4, class: "form-control quotation-comment-textarea", readonly: (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
+            <% if quotation_comment.id %>
+              <p><%= quotation_comment.comment %></p>
+            <% else %>
+              <%= fi.text_area :comment, rows: 4, class: "form-control quotation-comment-textarea", readonly: (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
+              <div style="float:right; padding-top:5px;">
+                <%= submit_tag "Submit", class: "btn btn-primary btn-sm" unless (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
+              </div>
+            <% end %>
+            <%= fi.hidden_field :quotation_id, value: quotation_comment.quotation_id %>
           </div>
-          <%= fi.hidden_field :quotation_id, value: quotation_comment.quotation_id %>
-          <%= submit_tag "Submit", class: "btn btn-primary btn-sm" unless (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
         </div>
       </div>
       <% end %>
