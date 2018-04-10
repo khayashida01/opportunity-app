@@ -57,17 +57,18 @@ class QuotationsController < ApplicationController
         render 'edit'
       end
     else
+      pm = quotation_params
       if params[:submit]
-        @quotation.quotation_status_id = 1
+        pm[:quotation_status_id] = 1
       elsif params[:review]
-        @quotation.quotation_status_id = 2
+        pm[:quotation_status_id] = 2
       elsif params[:reject]
-        @quotation.quotation_status_id = 3
+        pm[:quotation_status_id] = 3
       elsif params[:approve]
-        @quotation.quotation_status_id = 4
+        pm[:quotation_status_id] = 4
       end
       
-      if @quotation.update(quotation_params)
+      if @quotation.update(pm)
         flash.now[:success] = "Quotation has been updated successfully"
         render 'edit'
       else
@@ -84,7 +85,7 @@ class QuotationsController < ApplicationController
   def quotation_params
     params.require(:quotation).permit(:quotation_id, :date_created, :sales, :customer_id, :description, :revision,
                                       :fob_cif_code, :port, :quantity_allowance_code, :quantity_allowance,
-                                      :frequency_of_shipment,
+                                      :frequency_of_shipment, :quotation_status_id,
                                       :commit,
                                       quotation_comments_attributes: [:id, :comment])
   end

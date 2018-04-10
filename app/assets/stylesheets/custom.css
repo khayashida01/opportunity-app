@@ -54,3 +54,18 @@ div.test .flexible {
 div.test td {
   border:1px solid black;
 }
+
+
+
+.thead-light {
+    color: #495057;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+
+
+
+/** Quotation */
+.quotation-comment-textarea {
+  resize: none;
+}

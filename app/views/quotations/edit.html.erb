@@ -1,6 +1,8 @@
+<%= render 'shared/errors', obj: @quotation %>
 
 <div class="container test">
   <h3>Quotation Request Sheet</h3>
+  <br />
   <%= form_for(@quotation, :html => {class: "form-horizontal", role: "form"}) do |f| %>
   <div class="row">
           <div class="form-group">
@@ -25,6 +27,7 @@
       <ul>
         <li class="lbl col-xs-1"><%= f.label :quotation_status_id, "Status" %></li>
         <li class="col-xs-2"><%= get_quotation_status_name(@quotation.quotation_status_id) %></li>
+        <%= f.hidden_field :quotation_status_id, value: @quotation.quotation_status_id %>
       </ul>
     </div>
     <div class="flexbox">
@@ -406,7 +409,7 @@
             <% end %>
           </div>
           <div class="panel-body">
-            <%= fi.text_area :comment, rows: 4, class: "form-control", readonly: (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
+            <%= fi.text_area :comment, rows: 4, class: "form-control quotation-comment-textarea", readonly: (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>
           </div>
           <%= fi.hidden_field :quotation_id, value: quotation_comment.quotation_id %>
           <%= submit_tag "Submit", class: "btn btn-primary btn-sm" unless (quotation_comment.user_id && current_user.id != quotation_comment.user_id) %>

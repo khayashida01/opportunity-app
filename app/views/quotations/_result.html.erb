@@ -1,36 +1,30 @@
 
 <% if @quotations %>
   <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="font-weight:bold;">Search Result</div>
-      <div class="panel-body">
-        
-        <table class="table table-bordered table-hover table-sm">
-          <thead class="thead-light">
-            <tr>
-              <th class="col-xs-1"></th>
-              <th class="col-xs-1">Status</th>
-              <th class="col-xs-1">Date</th>
-              <th class="col-xs-2">Company</th>
-              <th class="col-xs-2">Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @quotations.each do |quotation| %>
-            <tr>
-              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
-                <%= link_to "Detail", quotation_path(quotation), class: "btn btn-info btn-sm" %>
-              </td>
-              <td class="col-xs-1"><%= get_quotation_status_name(quotation.quotation_status_id) %></td>
-              <td class="col-xs-1"><%= quotation.date_created %></td>
-              <td class="col-xs-2"><%= quotation.customer.company_name %></td>
-              <td class="col-xs-2"><%= quotation.description %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <%= will_paginate @quotations %>
-      </div>
-    </div>
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th style="width:80px;"></th>
+          <th style="width:100px;">Status</th>
+          <th style="width:100px;">Date</th>
+          <th style="width:200px;">Company</th>
+          <th style="width:300px;">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @quotations.each do |quotation| %>
+        <tr>
+          <td scope="row" style="text-align:center; vertical-align:middle;">
+            <%= link_to "Detail", quotation_path(quotation), class: "btn btn-primary btn-sm" %>
+          </td>
+          <td><%= get_quotation_status_name(quotation.quotation_status_id) %></td>
+          <td><%= quotation.date_created %></td>
+          <td><%= quotation.customer.company_name %></td>
+          <td><%= quotation.description %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= will_paginate @quotations %>
   </div>
 <% end %>
