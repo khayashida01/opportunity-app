@@ -17,6 +17,8 @@
 //= require bootstrap-datepicker
 //= require Chart.min
 //= require_tree .
+//= require underscore
+//= require gmaps/google
 
 $(document).on('turbolinks:load', function(){
   $('.datepicker').datepicker({format: 'yyyy-mm-dd'});

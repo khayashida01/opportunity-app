@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @geouser.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @geouser.description %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @geouser.address %>
+</p>
+
+<p>
+  <strong>Latitude:</strong>
+  <%= @geouser.latitude %>
+</p>
+
+<p>
+  <strong>Longitude:</strong>
+  <%= @geouser.longitude %>
+</p>
+
+<%= link_to 'Edit', edit_geouser_path(@geouser) %> |
+<%= link_to 'Back', geousers_path %>
