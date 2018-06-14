@@ -26,7 +26,7 @@ class WelcomeController < ApplicationController
     @user.current_latitude = params[:latitude]
     @user.current_longitude = params[:longitude]
     @user.save
-    render 'welcome/index'
-    #redirect_to root_path
+    #render 'welcome/index'
+    redirect_to root_path
   end
 end
