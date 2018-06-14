@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180613033824) do
+ActiveRecord::Schema.define(version: 20180614041815) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -183,6 +183,8 @@ ActiveRecord::Schema.define(version: 20180613033824) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "group_id"
+    t.float    "current_latitude"
+    t.float    "current_longitude"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

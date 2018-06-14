@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   devise_for :users
   
   root 'welcome#index'
+  post 'update_current_location' => "welcome#update_current_location"
+  
   resources :employees
   get 'search_employees' => 'employees#search'
   
