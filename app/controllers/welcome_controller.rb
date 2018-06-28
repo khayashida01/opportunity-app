@@ -16,6 +16,23 @@ class WelcomeController < ApplicationController
         marker.json({title: user.email})
       end
     end
+    
+    @today_activities = Activity.all
+    @hash2 = Gmaps4rails.build_markers(@today_activities) do |activity, marker|
+      if activity.schedule_latitude && activity.schedule_longitude
+        marker.lat activity.schedule_latitude
+        marker.lng activity.schedule_longitude
+        marker.infowindow activity.schedule_place_name
+        marker.json({title: activity.description})
+      end
+    end
+    
+    # @hash3 = {}
+    # Activity.all do |activity|
+    #   if activity.schedule_latitude && activity.schedule_longitude
+    #     @hash3.push({lat: activity.schedule_latitude, lng: activity.schedule_longitude})
+    #   end
+    # end
   end
 
   def test

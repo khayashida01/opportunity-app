@@ -9,11 +9,11 @@
     <script type="text/javascript">
         handler = Gmaps.build('Google');
         handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-          markers = handler.addMarkers(<%=raw @hash.to_json %>);
+          //markers = handler.addMarkers(<%=raw @hash.to_json %>);
+          markers = handler.addMarkers(<%=raw @hash2.to_json %>);
           handler.bounds.extendWith(markers);
           handler.fitMapToBounds();
         });
-        
         
     // 現在地取得処理
     function initMap() {
@@ -72,10 +72,73 @@
         alert("この端末では位置情報が取得できません");
       }
     }
-    initMap();
+    
+      function initMap2() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: 40.742966, lng: -74.006865},
+          mapTypeId: 'terrain'
+        });
+
+        // var flightPlanCoordinates = [
+        //   {lat: 37.772, lng: -122.214},
+        //   {lat: 21.291, lng: -157.821},
+        //   {lat: -18.142, lng: 178.431},
+        //   {lat: -27.467, lng: 153.027}
+        // ];
+        var flightPlanCoordinates = [
+          <% Activity.all.each do |activity| %>
+            <% if activity.schedule_latitude && activity.schedule_longitude %>
+              <%= "{lat: " + activity.schedule_latitude.to_s + ", lng: " + activity.schedule_longitude.to_s + "}," %>
+            <% end %>
+          <% end %>
+        ];
+        var flightPath = new google.maps.Polyline({
+          path: flightPlanCoordinates,
+          geodesic: true,
+          strokeColor: '#FF0000',
+          strokeOpacity: 1.0,
+          strokeWeight: 2
+        });
+
+        flightPath.setMap(map);
+
+        var image='/assets/clock.png';
+        // var marker1=new google.maps.Marker({
+        //     position: new google.maps.LatLng(40.742966, -74.006865),
+        //     map: map,
+        //     icon: image
+        // });
+        // var infowindow1=new google.maps.InfoWindow({
+        //     content: "<b>Test</b><h2>Hey!</h2>",
+        //     maxWidth:200
+        // });
+        // google.maps.event.addListener(marker1, 'click', function() {
+        //     infowindow1.open(map,marker1);
+        // });
+        
+        <% Activity.all.each do |activity| %>
+          <% if activity.schedule_latitude && activity.schedule_longitude %>
+              var marker<%=activity.id%> = new google.maps.Marker({
+                  position: new google.maps.LatLng(<%=activity.schedule_latitude%>, <%=activity.schedule_longitude%>),
+                  map: map,
+                  icon: image
+              });
+              var infowindow<%=activity.id%> = new google.maps.InfoWindow({
+                  content: "<h4><%=activity.schedule_place_name%></h4><p><%=activity.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p")%></p>",
+                  maxWidth: 200
+              });
+              google.maps.event.addListener(marker<%=activity.id%>, 'click', function() {
+                  infowindow<%=activity.id%>.open(map,marker<%=activity.id%>);
+              });
+          <% end %>
+        <% end %>
+      }
+    //initMap();
+    initMap2();
     </script>
   </div>
-  <div class="row" style="padding-bottom:30px;">
+  <div class="row">
     <%= form_tag update_current_location_path, method: :update, class: 'form-horizontal' do %>
       <div class="form-group">
         <%= hidden_field_tag :latitude, value: '' %>
@@ -84,6 +147,30 @@
       </div>
     <% end %>
   </div>
+<% if @today_activities %>
+  <div class="row" style="padding-bottom:30px;">
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="thead-light">
+        <tr>
+          <th class="col-md-1"></th>
+          <th class="col-md-3">Datetime</th>
+          <th class="col-md-8">Place</th>
+        </tr> 
+      </thead>
+      <tbody>
+        <% @today_activities.each do |activity| %>
+        <tr>
+          <td scope="row" style="text-align:center; vertical-align:middle;">
+            <%= link_to "Detail", activity_path(activity), class: "btn btn-primary btn-sm" %>
+          </td>
+          <td><%= activity.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p") %></td>
+          <td><%= activity.schedule_place_name %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>
 
   <div class="row">
     <div class="col-md-6 col-xs-12">

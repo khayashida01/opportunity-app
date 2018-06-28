@@ -19,9 +19,12 @@
 //= require_tree .
 //= require underscore
 //= require gmaps/google
+//= require moment
+//= require bootstrap-datetimepicker
 
 $(document).on('turbolinks:load', function(){
   $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
+  $('.datetimepicker').datetimepicker({format: 'YYYY-MM-DD hh:mm:ss A'});
 }).on('dp.error', function(e) {
   $(e.target).val('');
 });
