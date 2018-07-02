@@ -52,6 +52,18 @@ class ActivitiesController < ApplicationController
     end
   end
   
+  def checkin
+    activity = Activity.find(params[:activity][:id])
+    activity.activity_status_id = 2
+    activity.save
+  end
+  
+  def checkout
+    activity = Activity.find(params[:activity][:id])
+    activity.activity_status_id = 3
+    activity.save
+  end
+  
   private
     def set_activity
       @activity = Activity.find(params[:id])

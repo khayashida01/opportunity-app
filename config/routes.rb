@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   
   resources :activities
   get 'search_activities' => 'activities#search'
+  post 'checkin_activity' => 'activities#checkin'
+  post 'checkout_activity' => 'activities#checkout'
 
   #get 'welcome_test' => 'welcome#test'
 

@@ -134,8 +134,15 @@
               });
               var content<%=activity.id%> = "";
               content<%=activity.id%> = "<h4><%=activity.schedule_place_name%></h4><p><%=activity.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p")%></p>"
-                + '<%= button_tag(type: :submit, class: "btn btn-sm btn-success") do %>Check-In<% end %>&nbsp;'
-                + '<%= button_tag(type: :submit, class: "btn btn-sm btn-danger") do %>Check-Out<% end %>';
+                + '<%= form_for activity, url: checkin_activity_path, remote: true, method: :update, id: "activity-form" do |f| %>'
+                + '<%= f.hidden_field :id %>'
+                + '<%= button_tag(type: :submit, class: "btn btn-sm btn-success", name: "check-in") do %>Check-In<% end %>&nbsp;'
+                + '<% end %>'
+                + '<%= form_for activity, url: checkout_activity_path, remote: true, method: :update, id: "activity-form" do |f| %>'
+                + '<%= f.hidden_field :id %>'
+                + '<%= button_tag(type: :submit, class: "btn btn-sm btn-danger", name: "check-out") do %>Check-Out<% end %>'
+                + '<% end %>'
+                + '';
               
               var infowindow<%=activity.id%> = new google.maps.InfoWindow({
                   content: content<%=activity.id%>,
