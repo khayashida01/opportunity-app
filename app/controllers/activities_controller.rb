@@ -58,7 +58,7 @@ class ActivitiesController < ApplicationController
     end
     
     def activity_params
-      params.require(:activity).permit(:opportunity_id, :activity_status, :probability, :date_created, :opportunity_stage_code, :log_type,
+      params.require(:activity).permit(:opportunity_id, :activity_status_id, :probability, :date_created, :opportunity_stage_code, :log_type,
                                         :due_date, :employee_id, :priority_code, :description, :comment,
                                         :schedule_datetime, :schedule_place_name, :schedule_latitude, :schedule_longitude)
     end

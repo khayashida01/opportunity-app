@@ -7,95 +7,95 @@
       <div class="panel-body">
         <%= form_for(@activity, :html => {class: "form-horizontal", role: "form"}) do |f| %>
           <div class="form-group row">
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :id, "Activity#" %>
               <%= f.text_field :id, class: "form-control", :readonly => true %>
             </div>
-            <div class="col-xs-10">
+            <div class="col-md-10">
               <%= f.label :opportunity_id, "Opportunity" %>
               <%= f.collection_select :opportunity_id, Opportunity.all, :id, :opportunity_name, {:include_blank => true}, {class: 'form-control'} %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-2">
-              <%= f.label :activity_status, "Status" %>
-              <%= f.text_field :activity_status, class: "form-control" %>
+            <div class="col-md-2">
+              <%= f.label :activity_status_id, "Status" %>
+              <%= f.collection_select :activity_status_id, ActivityStatus.all, :id, :activity_status_name, {:include_blank => true}, {class: 'form-control'} %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :probability, "Probability (%)" %>
               <%= f.text_field :probability, class: "form-control" %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :date_created, "Date Created" %>
               <%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :opportunity_stage_code, "Opportunity Stage" %>
               <%= f.text_field :opportunity_stage_code, class: "form-control" %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :log_type, "Log Type" %>
               <%= f.text_field :log_type, class: "form-control" %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :due_date, "Due Date" %>
               <%= f.text_field :due_date, value: f.object.due_date.try(:strftime, "%Y-%m-%d"), class: "form-control datepicker", data: { provide:'datepicker'} %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-4">
+            <div class="col-md-4">
               <%= f.label :employee_id, "Assign To" %>
               <%= f.collection_select :employee_id, Employee.all, :id, :full_name, {:include_blank => true}, {class: 'form-control'} %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <label class="control-label">Communication Type</label>
               <input type="text" class="form-control" value=""/>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :priority_code, "Priority" %>
               <%= f.text_field :priority_code, class: "form-control" %>
             </div>
-            <div class="col-xs-4">
+            <div class="col-md-4">
               <%= f.label :schedule_datetime, "Schedule Datetime" %>
               <%= f.text_field :schedule_datetime, value: f.object.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
                       data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-4">
+            <div class="col-md-4">
               <%= f.label :schedule_place_name, "Meeting Place" %>
               <%= f.text_field :schedule_place_name, class: "form-control" %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :schedule_latitude, "Latitude" %>
               <%= f.text_field :schedule_latitude, class: "form-control" %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :schedule_longitude, "Latitude" %>
               <%= f.text_field :schedule_longitude, class: "form-control" %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-12">
+            <div class="col-md-12">
               <%= f.label :description, "Subject & Description" %>
               <%= f.text_area :description, rows: 4, class: "form-control" %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-12">
+            <div class="col-md-12">
               <%= f.label :comment, "Follow up - Comments" %>
               <%= f.text_area :comment, rows: 4, class: "form-control" %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-4">
-              <label class="control-label col-xs-2">Attachment</label>
+            <div class="col-md-4">
+              <label class="control-label col-md-2">Attachment</label>
               <input type="text" class="form-control" value=""/>
             </div>
           </div>
 
           <div class="form-group">
-            <div class="col-xs-10">
+            <div class="col-md-10">
             <%= f.submit "Submit", class: "btn btn-primary btn-sm" %>
             </div>
           </div>

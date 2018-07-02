@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180627034741) do
+ActiveRecord::Schema.define(version: 20180702154924) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20180627034741) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "opportunity_id"
-    t.string   "activity_status"
     t.integer  "probability"
     t.date     "date_created"
     t.string   "opportunity_stage_code"
@@ -46,6 +45,14 @@ ActiveRecord::Schema.define(version: 20180627034741) do
     t.string   "schedule_place_name"
     t.float    "schedule_latitude"
     t.float    "schedule_longitude"
+    t.integer  "activity_status_id"
+  end
+
+  create_table "activity_statuses", force: :cascade do |t|
+    t.string   "activity_status_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "admin_users", force: :cascade do |t|
