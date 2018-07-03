@@ -17,7 +17,7 @@ class WelcomeController < ApplicationController
       end
     end
     
-    @today_activities = Activity.all
+    @today_activities = Activity.order(:schedule_datetime)
     @hash2 = Gmaps4rails.build_markers(@today_activities) do |activity, marker|
       if activity.schedule_latitude && activity.schedule_longitude
         marker.lat activity.schedule_latitude
