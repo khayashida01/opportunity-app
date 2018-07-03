@@ -118,7 +118,7 @@
         //     infowindow1.open(map,marker1);
         // });
         
-        <% Activity.all.each_with_index do |activity, index| %>
+        <% @today_activities.each_with_index do |activity, index| %>
           <% if activity.schedule_latitude && activity.schedule_longitude %>
               <%# Change icon image based on activity status. %>
               <% if activity.activity_status_id == 1 %>
@@ -180,8 +180,9 @@
         <tr>
           <th class="col-md-1"></th>
           <th class="col-md-1">#</th>
+          <th class="col-md-2">Status</th>
           <th class="col-md-3">Datetime</th>
-          <th class="col-md-7">Place</th>
+          <th class="col-md-5">Place</th>
         </tr> 
       </thead>
       <tbody>
@@ -190,7 +191,8 @@
           <td scope="row" style="text-align:center; vertical-align:middle;">
             <%= link_to "Detail", activity_path(activity), class: "btn btn-primary btn-sm" %>
           </td>
-          <td scope="row" style="text-align:center; vertical-align:middle;"><%=index + 1%></td>
+          <td><%=index + 1%></td>
+          <td><%= activity.activity_status.activity_status_name if activity.activity_status %></td>
           <td><%= activity.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p") %></td>
           <td><%= activity.schedule_place_name %></td>
         </tr>
