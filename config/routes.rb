@@ -20,8 +20,9 @@ Rails.application.routes.draw do
   
   resources :activities
   get 'search_activities' => 'activities#search'
-  post 'checkin_activity' => 'activities#checkin'
-  post 'checkout_activity' => 'activities#checkout'
+  post 'activities/:id/checkin' => 'activities#checkin', as: 'checkin_activities'
+  get 'activities/:id/checkout' => 'activities#checkout', as: 'checkout_activities'
+  patch 'activities/:id/checkout' => 'activities#checkout_update', as: 'checkout_update_activities'
 
   #get 'welcome_test' => 'welcome#test'
 

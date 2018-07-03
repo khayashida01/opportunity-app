@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :set_activity, only: [:edit, :update, :show, :destroy]
+  before_action :set_activity, only: [:edit, :update, :show, :destroy, :checkin, :checkout, :checkout_update]
   
   def index
     @activities = Activity.all.paginate(page: params[:page], per_page: 5)
@@ -53,15 +53,20 @@ class ActivitiesController < ApplicationController
   end
   
   def checkin
-    activity = Activity.find(params[:activity][:id])
-    activity.activity_status_id = 2
-    activity.save
+    @activity.activity_status_id = 2
+    @activity.save
+    redirect_to root_path
   end
   
   def checkout
-    activity = Activity.find(params[:activity][:id])
-    activity.activity_status_id = 3
-    activity.save
+    #@activity = Activity.find(params[:activity][:id])
+    #render JSON.parse(params)
+  end
+  
+  def checkout_update
+    @activity.activity_status_id = 3
+    @activity.save
+    redirect_to root_path
   end
   
   private
