@@ -88,7 +88,7 @@
         //   {lat: -27.467, lng: 153.027}
         // ];
         var flightPlanCoordinates = [
-          <% Activity.all.each do |activity| %>
+          <% @today_activities.each do |activity| %>
             <% if activity.schedule_latitude && activity.schedule_longitude %>
               <%= "{lat: " + activity.schedule_latitude.to_s + ", lng: " + activity.schedule_longitude.to_s + "}," %>
             <% end %>
@@ -161,7 +161,7 @@
         return map;
       }
     initMap2();
-    initMap(map);
+    //initMap(map);
     </script>
   </div>
   <div class="row">
