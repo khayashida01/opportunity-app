@@ -125,6 +125,8 @@
                 var image<%=activity.id%> = '<%=image_path('upcoming_' + (index + 1).to_s + '.png')%>';
               <% elsif activity.activity_status_id == 2 %>
                 var image<%=activity.id%> = '<%=image_path('clock.png')%>';
+              <% elsif activity.activity_status_id == 5 %>
+                var image<%=activity.id%> = '<%=image_path('canceled.png')%>';
               <% else %>
                 var image<%=activity.id%> = '<%=image_path('number_' + (index + 1).to_s + '.png')%>';
               <% end %>
