@@ -16,7 +16,7 @@
         });
         
     // 現在地取得処理
-    function initMap() {
+    function initMap(map) {
       // Geolocation APIに対応している
       if (navigator.geolocation) {
         // 現在地を取得
@@ -25,24 +25,25 @@
           function(position) {
             // 緯度・経度を変数に格納
             var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            /*
+            
             // マップオプションを変数に格納
             var mapOptions = {
               zoom : 15,          // 拡大倍率
               center : mapLatLng  // 緯度・経度
             };
             // マップオブジェクト作成
-            var map = new google.maps.Map(
-              document.getElementById("map"), // マップを表示する要素
-              mapOptions         // マップオプション
-            );
+            // var map = new google.maps.Map(
+            //   document.getElementById("map"), // マップを表示する要素
+            //   mapOptions         // マップオプション
+            // );
             //　マップにマーカーを表示する
             var marker = new google.maps.Marker({
               map : map,             // 対象の地図オブジェクト
-              position : mapLatLng   // 緯度・経度
+              position : mapLatLng,   // 緯度・経度
+              icon : '<%=image_path('person.png')%>'
             });
-            alert(mapLatLng);
-            */
+            //alert(mapLatLng);
+            
             // Hayashida
             jQuery('#latitude').val(position.coords.latitude);
             jQuery('#longitude').val(position.coords.longitude);
@@ -153,9 +154,10 @@
               });
           <% end %>
         <% end %>
+        return map;
       }
-    //initMap();
     initMap2();
+    initMap(map);
     </script>
   </div>
   <div class="row">
