@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   
   resources :customers
   get 'search_customers' => 'customers#search'
+  get 'customer_search' => 'customers#customer_search'
   
   resources :opportunities
   get 'search_opportunities' => 'opportunities#search'
