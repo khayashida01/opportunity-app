@@ -22,6 +22,10 @@ class CustomersController < ApplicationController
 
   def new
     @customer = Customer.new
+    @customer.company_name = params[:company_name]
+    @customer.latitude = params[:latitude]
+    @customer.longitude = params[:longitude]
+    @customer.url = params[:url]
     render 'edit'
   end
   

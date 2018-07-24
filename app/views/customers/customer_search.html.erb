@@ -82,7 +82,24 @@
             google.maps.event.addListener(marker, 'click', function() {
               var lat = place.geometry.location.lat();
               var lng = place.geometry.location.lng();
-              infowindow.setContent("<b>" + place.name + "," + place.geometry.location + "," + lat + "," + lng + "</b>");
+              
+              //var content = "<h4>" + place.name + "</h4>"
+              //  + '<p>' + place.geometry.location + '</p>'
+              //  + '<%= link_to "Add", new_customer_path, class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
+              //  + '';
+              var content = "<h4>" + place.name + "</h4>"
+                + '<p>' + place.geometry.location + '</p>'
+                + '<%= form_tag new_customer_path, method: :get, class: "form-horizontal" do %>'
+                + '<div class="form-group">'
+                + '<input type="hidden" name="latitude" value="' + lat + '" />'
+                + '<input type="hidden" name="longitude" value="' + lng + '" />'
+                + '<input type="hidden" name="company_name" value="' + place.name + '" />'
+                + '<input type="hidden" name="url" value="' + place.website + '" />'
+                + '<div class="col-xs-offset-2 col-xs-2"><%= button_tag(type: :submit, class: "btn btn-sm btn-success") do %>Add<% end %></div>'
+                + '</div>'
+                + '<% end %>';
+              // "<b>" + place.name + "," + place.geometry.location + "," + lat + "," + lng + "</b>"
+              infowindow.setContent(content);
               infowindow.open(map, this);
             });
 

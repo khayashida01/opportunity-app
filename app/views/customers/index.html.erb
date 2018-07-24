@@ -2,17 +2,12 @@
 <div class="container">
   <h3>Customer Inquiry</h3>
   <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="font-weight:bold;">Search Criteria</div>
-      <div class="panel-body">
         <%= form_tag search_customers_path, method: :get, class: 'form-horizontal' do %>
           <div class="form-group">
             <div class="col-xs-8"><%= text_field_tag :customer_search_text, @customer_search_text, placeholder: "Search...", autofocus: true, class: "form-control" %></div>
             <div class="col-xs-2"><%= button_tag(type: :submit, class: "btn btn-sm btn-success") do %>Search<% end %></div>
           </div>
         <% end %>
-      </div>
-    </div>
   </div>
 
   <%= render 'customers/result' %>

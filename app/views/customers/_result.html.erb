@@ -1,10 +1,46 @@
 
 <% if @customers %>
   <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="font-weight:bold;">Search Result</div>
-      <div class="panel-body">
+    <div class="col-xs-12" style="padding-bottom:5px;">
+      <div id="map" class="col-xs-12" style='height: 400px; text-align:center;'></div>
+    </div>
+    
+    <script type="text/javascript">
+      function initMap2() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: {lat: 40.742966, lng: -74.006865},
+          mapTypeId: 'terrain'
+        });
         
+        <% @customers.each_with_index do |customer, index| %>
+          <% if customer.latitude && customer.longitude %>
+              var marker<%=customer.id%> = new google.maps.Marker({
+                  position: new google.maps.LatLng(<%=customer.latitude%>, <%=customer.longitude%>),
+                  map: map,
+                  icon: '<%=image_path('clock.png')%>'
+              });
+              var content<%=customer.id%> = "";
+              content<%=customer.id%> = "<h4><%=customer.company_name%></h4>"
+                + '<%= link_to "Detail", edit_customer_path(customer), class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
+                + '';
+              
+              var infowindow<%=customer.id%> = new google.maps.InfoWindow({
+                  content: content<%=customer.id%>,
+                  maxWidth: 200
+              });
+              google.maps.event.addListener(marker<%=customer.id%>, 'click', function() {
+                  infowindow<%=customer.id%>.open(map,marker<%=customer.id%>);
+              });
+          <% end %>
+        <% end %>
+        return map;
+      }
+    initMap2();
+    </script>
+  </div>
+
+  <div class="row">
         <table class="table table-bordered table-hover table-sm">
           <thead class="thead-light">
             <tr>
@@ -23,7 +59,7 @@
                 <%= link_to "Detail", edit_customer_path(customer), class: "btn btn-info btn-sm" %>
               </td>
               <td class="col-xs-3"><%= customer.company_name %></td>
-              <td class="col-xs-2"><%= "#{customer.contact_first_name} #{customer.contact_last_name}" %>r</td>
+              <td class="col-xs-2"><%= "#{customer.contact_first_name} #{customer.contact_last_name}" %></td>
               <td class="col-xs-2"><%= customer.contact_title %></td>
               <td class="col-xs-2"><%= customer.contact_department %></td>
               <td class="col-xs-2"><%= customer.contact_tel %></td>
@@ -32,7 +68,5 @@
           </tbody>
         </table>
         <%= will_paginate @customers %>
-      </div>
-    </div>
   </div>
 <% end %>
