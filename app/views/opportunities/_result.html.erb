@@ -1,42 +1,38 @@
 
 <% if @opportunities %>
   <div class="row">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="font-weight:bold;">Search Result</div>
-      <div class="panel-body">
-        
-        <table class="table table-bordered table-hover table-sm">
-          <thead class="thead-light">
-            <tr>
-              <th class="col-xs-1"></th>
-              <th class="col-xs-1">Date</th>
-              <th class="col-xs-2">Company</th>
-              <th class="col-xs-2">Opportunity Name</th>
-              <th class="col-xs-1">Opportunity Stage</th>
-              <th class="col-xs-2">Current Expected Revenue Amount</th>
-              <th class="col-xs-1">Probability (%)</th>
-              <th class="col-xs-2">Expected Revenue Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @opportunities.each do |opportunity| %>
-            <tr>
-              <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
-                <%= link_to "Detail", opportunity_path(opportunity), class: "btn btn-info btn-sm" %>
-              </td>
-              <td class="col-xs-1"><%= opportunity.date_created %></td>
-              <td class="col-xs-2"></td>
-              <td class="col-xs-2"><%= opportunity.opportunity_name %></td>
-              <td class="col-xs-1"><%= opportunity.opportunity_stage_code %></td>
-              <td class="col-xs-2"><%= opportunity.current_expected_revenue_amount %></td>
-              <td class="col-xs-1"></td>
-              <td class="col-xs-2"><%= opportunity.expected_revenue_amount %></td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <%= will_paginate @opportunities %>
-      </div>
-    </div>
+    <% if @opportunities.all.count != 0 %>
+      <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th class="col-xs-1"></th>
+            <th class="col-xs-1">Date</th>
+            <th class="col-xs-2">Company</th>
+            <th class="col-xs-2">Opportunity Name</th>
+            <th class="col-xs-1">Opportunity Stage</th>
+            <th class="col-xs-2">Current Expected Revenue Amount</th>
+            <th class="col-xs-1">Probability (%)</th>
+            <th class="col-xs-2">Expected Revenue Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @opportunities.each do |opportunity| %>
+          <tr>
+            <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
+              <%= link_to "Detail", opportunity_path(opportunity), class: "btn btn-info btn-sm" %>
+            </td>
+            <td class="col-xs-1"><%= opportunity.date_created %></td>
+            <td class="col-xs-2"></td>
+            <td class="col-xs-2"><%= opportunity.opportunity_name %></td>
+            <td class="col-xs-1"><%= opportunity.opportunity_stage.opportunity_stage_name if opportunity.opportunity_stage %></td>
+            <td class="col-xs-2"><%= opportunity.current_expected_revenue_amount %></td>
+            <td class="col-xs-1"></td>
+            <td class="col-xs-2"><%= opportunity.expected_revenue_amount %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= will_paginate @opportunities %>
+    <% end %>
   </div>
 <% end %>

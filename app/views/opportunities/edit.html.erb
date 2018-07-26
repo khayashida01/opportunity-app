@@ -7,54 +7,68 @@
       <div class="panel-body">
         <%= form_for(@opportunity, :html => {class: "form-horizontal", role: "form"}) do |f| %>
           <div class="form-group row">
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :id, "Record#" %>
               <%= f.text_field :id, class: "form-control", :readonly => true %>
             </div>
-            <div class="col-xs-2">
+            <div class="col-md-2">
               <%= f.label :date_created, "Date" %>
               <%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %>
             </div>
+            <div class="col-md-4">
+              <%= f.label :opportunity_stage_id, "Stage" %>
+              <%= f.collection_select :opportunity_stage_id, OpportunityStage.all, :id, :opportunity_stage_name, {:include_blank => true}, {class: 'form-control'} %>
+            </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-6">
+            <div class="col-md-6">
               <%= f.label :customer_id, "Customer" %>
               <%= f.collection_select :customer_id, Customer.all, :id, :company_name, {:include_blank => true}, {class: 'form-control'} %>
             </div>
-            <div class="col-xs-3">
-              <%= f.label :employee_id, "Representative" %>
-              <%= f.collection_select :employee_id, Employee.all, :id, :full_name, {:include_blank => true}, {class: 'form-control'} %>
+            <div class="col-md-3">
+              <%= f.label :user_id, "Representative" %>
+              <%= f.collection_select :user_id, User.all, :id, :full_name, {:include_blank => true}, {class: 'form-control'} %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-12">
+            <div class="col-md-12">
               <%= f.label :opportunity_name, "Opportunity Name" %>
               <%= f.text_field :opportunity_name, class: "form-control" %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-12">
+            <div class="col-md-12">
               <%= f.label :opportunity_description, "Opportunity Description" %>
-              <%= f.text_field :opportunity_description, class: "form-control" %>
+              <%= f.text_area :opportunity_description, rows: 5, class: "form-control", style: "resize : none;" %>
             </div>
           </div>
           <div class="form-group row">
-            <div class="col-xs-4">
-              <%= f.label :lead_source_code, "Lead Source" %>
-              <%= f.text_field :lead_source_code, class: "form-control" %>
+            <div class="col-md-6">
+              <%= f.label :lead_source_id, "Lead Source" %>
+              <%= f.collection_select :lead_source_id, LeadSource.all, :id, :lead_source_name, {:include_blank => true}, {class: 'form-control'} %>
             </div>
-            <div class="col-xs-4">
+            <div class="col-md-4">
+              <%= f.label :grade_id, "Grade" %>
+              <%= f.collection_select :grade_id, Grade.all, :id, :grade_name, {:include_blank => true}, {class: 'form-control'} %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4">
               <%= f.label :expected_revenue_amount, "Expected Revenue Amount" %>
               <%= f.text_field :expected_revenue_amount, class: "form-control" %>
             </div>
-            <div class="col-xs-4">
+            <div class="col-md-4">
               <%= f.label :current_expected_revenue_amount, "Current Expected Revenue Amount" %>
               <%= f.text_field :current_expected_revenue_amount, class: "form-control" %>
+            </div>
+            <div class="col-md-4">
+              <%= f.label :actual_sales_amount, "Actual Sales Amount" %>
+              <%= f.text_field :actual_sales_amount, class: "form-control" %>
             </div>
           </div>
           
           <div class="form-group">
-            <div class="col-xs-10">
+            <div class="col-md-10">
             <%= f.submit "Submit", class: "btn btn-primary btn-sm" %>
             </div>
           </div>

@@ -30,12 +30,12 @@
               <%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %>
             </div>
             <div class="col-md-2">
-              <%= f.label :opportunity_stage_code, "Opportunity Stage" %>
-              <%= f.text_field :opportunity_stage_code, class: "form-control" %>
+              <%= f.label :opportunity_stage_id, "Opportunity Stage" %>
+              <%= f.collection_select :opportunity_stage_id, OpportunityStage.all, :id, :opportunity_stage_name, {:include_blank => true}, {class: "form-control"} %>
             </div>
             <div class="col-md-2">
-              <%= f.label :log_type, "Log Type" %>
-              <%= f.text_field :log_type, class: "form-control" %>
+              <%= f.label :log_type_id, "Log Type" %>
+              <%= f.collection_select :log_type_id, LogType.all, :id, :log_type_name, {:include_blank => true}, {class: "form-control"} %>
             </div>
             <div class="col-md-2">
               <%= f.label :due_date, "Due Date" %>
@@ -44,20 +44,27 @@
           </div>
           <div class="form-group row">
             <div class="col-md-4">
-              <%= f.label :employee_id, "Assign To" %>
-              <%= f.collection_select :employee_id, Employee.all, :id, :full_name, {:include_blank => true}, {class: 'form-control'} %>
+              <%= f.label :user_id, "Assign To" %>
+              <%= f.collection_select :user_id, User.all, :id, :full_name, {:include_blank => true}, {class: 'form-control'} %>
             </div>
             <div class="col-md-2">
-              <label class="control-label">Communication Type</label>
-              <input type="text" class="form-control" value=""/>
+              <%= f.label :communication_type_id, "Communication Type" %>
+              <%= f.collection_select :communication_type_id, CommunicationType.all, :id, :communication_type_name, {:include_blank => true}, {class: "form-control"} %>
             </div>
             <div class="col-md-2">
-              <%= f.label :priority_code, "Priority" %>
-              <%= f.text_field :priority_code, class: "form-control" %>
+              <%= f.label :priority_id, "Priority" %>
+              <%= f.collection_select :priority_id, Priority.all, :id, :priority_name, {:include_blank => true}, {class: "form-control"} %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4">
+              <%= f.label :schedule_start_at, "Schedule (Start)" %>
+              <%= f.text_field :schedule_start_at, value: f.object.schedule_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
+                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
             </div>
             <div class="col-md-4">
-              <%= f.label :schedule_datetime, "Schedule Datetime" %>
-              <%= f.text_field :schedule_datetime, value: f.object.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
+              <%= f.label :schedule_end_at, "Schedule (End)" %>
+              <%= f.text_field :schedule_end_at, value: f.object.schedule_end_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
                       data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
             </div>
           </div>
@@ -81,18 +88,14 @@
               <%= f.text_area :description, rows: 4, class: "form-control" %>
             </div>
           </div>
-          <div class="form-group row">
-            <div class="col-md-12">
-              <%= f.label :comment, "Follow up - Comments" %>
-              <%= f.text_area :comment, rows: 4, class: "form-control" %>
-            </div>
-          </div>
+          <!--
           <div class="form-group row">
             <div class="col-md-4">
               <label class="control-label col-md-2">Attachment</label>
               <input type="text" class="form-control" value=""/>
             </div>
           </div>
+          -->
 
           <div class="form-group">
             <div class="col-md-10">

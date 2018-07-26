@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180723194825) do
+ActiveRecord::Schema.define(version: 20180726151505) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -30,22 +30,41 @@ ActiveRecord::Schema.define(version: 20180723194825) do
 
   create_table "activities", force: :cascade do |t|
     t.integer  "opportunity_id"
-    t.integer  "probability"
     t.date     "date_created"
-    t.string   "opportunity_stage_code"
-    t.string   "log_type"
+    t.integer  "activity_status_id"
+    t.integer  "probability"
+    t.integer  "priority_id"
+    t.integer  "opportunity_stage_id"
+    t.integer  "log_type_id"
+    t.integer  "communication_type_id"
+    t.integer  "user_id"
     t.date     "due_date"
-    t.integer  "employee_id"
-    t.string   "priority_code"
+    t.text     "activity_name"
     t.text     "description"
-    t.text     "comment"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.datetime "schedule_datetime"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.datetime "schedule_start_at"
+    t.datetime "schedule_end_at"
     t.string   "schedule_place_name"
+    t.string   "schedule_street"
+    t.string   "schedule_city"
+    t.integer  "schedule_state_id"
+    t.string   "schedule_zip_code"
+    t.integer  "schedule_country_id"
     t.float    "schedule_latitude"
     t.float    "schedule_longitude"
-    t.integer  "activity_status_id"
+    t.datetime "actual_start_at"
+    t.datetime "actual_end_at"
+    t.string   "attendees"
+    t.integer  "activity_feeling_id"
+    t.text     "comment"
+  end
+
+  create_table "activity_feelings", force: :cascade do |t|
+    t.string   "activity_feeling_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
   create_table "activity_statuses", force: :cascade do |t|
@@ -73,31 +92,39 @@ ActiveRecord::Schema.define(version: 20180723194825) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
 
+  create_table "communication_types", force: :cascade do |t|
+    t.string   "communication_type_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string   "country_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "customers", force: :cascade do |t|
     t.string   "company_name"
     t.string   "url"
-    t.string   "industory_code"
+    t.string   "industry"
     t.text     "business_description"
-    t.string   "contact_first_name"
-    t.string   "contact_last_name"
-    t.string   "contact_title"
-    t.string   "contact_department"
-    t.string   "contact_tel"
-    t.string   "contact_email"
     t.string   "bill_to_street"
     t.string   "bill_to_city"
-    t.string   "bill_to_state"
+    t.integer  "bill_to_state_id"
     t.string   "bill_to_zip_code"
-    t.string   "bill_to_country"
+    t.integer  "bill_to_country_id"
     t.string   "ship_to_first_name"
     t.string   "ship_to_last_name"
     t.string   "ship_to_tel"
     t.string   "ship_to_email"
     t.string   "ship_to_street"
     t.string   "ship_to_city"
-    t.string   "ship_to_state"
+    t.integer  "ship_to_state_id"
     t.string   "ship_to_zip_code"
-    t.string   "ship_to_country"
+    t.integer  "ship_to_country_id"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.float    "latitude"
@@ -138,18 +165,55 @@ ActiveRecord::Schema.define(version: 20180723194825) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "grades", force: :cascade do |t|
+    t.string   "grade_name"
+    t.integer  "sort_order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lead_sources", force: :cascade do |t|
+    t.string   "lead_source_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "log_types", force: :cascade do |t|
+    t.string   "log_type_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "opportunities", force: :cascade do |t|
-    t.date     "date_created"
     t.integer  "customer_id"
+    t.date     "date_created"
     t.string   "opportunity_name"
     t.text     "opportunity_description"
-    t.string   "lead_source_code"
+    t.integer  "lead_source_id"
     t.decimal  "expected_revenue_amount"
     t.decimal  "current_expected_revenue_amount"
-    t.integer  "employee_id"
-    t.string   "opportunity_stage_code"
+    t.decimal  "actual_sales_amount"
+    t.integer  "user_id"
+    t.integer  "opportunity_stage_id"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.integer  "grade_id"
+  end
+
+  create_table "opportunity_stages", force: :cascade do |t|
+    t.string   "opportunity_stage_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "priorities", force: :cascade do |t|
+    t.string   "priority_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "quotation_comments", force: :cascade do |t|
@@ -182,6 +246,53 @@ ActiveRecord::Schema.define(version: 20180723194825) do
     t.datetime "updated_at",    null: false
   end
 
+  create_table "staffs", force: :cascade do |t|
+    t.integer  "customer_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "title"
+    t.string   "department"
+    t.string   "email"
+    t.string   "tel"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "states", force: :cascade do |t|
+    t.string   "state_name"
+    t.integer  "sort_order"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "todo_priorities", force: :cascade do |t|
+    t.string   "todo_priority_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  create_table "todo_statuses", force: :cascade do |t|
+    t.string   "todo_status_name"
+    t.integer  "sort_order"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  create_table "todos", force: :cascade do |t|
+    t.integer  "opportunity_id"
+    t.integer  "activity_id"
+    t.integer  "user_id"
+    t.date     "date_created"
+    t.integer  "todo_status_id"
+    t.string   "todo_name"
+    t.text     "description"
+    t.date     "due_date"
+    t.integer  "todo_priority_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -198,6 +309,8 @@ ActiveRecord::Schema.define(version: 20180723194825) do
     t.integer  "group_id"
     t.float    "current_latitude"
     t.float    "current_longitude"
+    t.string   "first_name"
+    t.string   "last_name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

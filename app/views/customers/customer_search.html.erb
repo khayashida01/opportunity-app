@@ -88,8 +88,10 @@
               //  + '<%= link_to "Add", new_customer_path, class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
               //  + '';
               var content = "<h4>" + place.name + "</h4>"
-                + '<p>' + place.geometry.location + '</p>'
-                + '<%= form_tag new_customer_path, method: :get, class: "form-horizontal" do %>'
+                //+ '<p>' + place.geometry.location + '</p>'
+                + '<p>' + place.formatted_address + '</p>'
+                + '<a href="' + place.url + '" target="_blank" style="color:#427fed">View on Google Maps</p>'
+                + '<%= form_tag new_customer_path, method: :get, class: "" do %>'
                 + '<div class="form-group">'
                 + '<input type="hidden" name="latitude" value="' + lat + '" />'
                 + '<input type="hidden" name="longitude" value="' + lng + '" />'

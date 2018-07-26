@@ -61,9 +61,13 @@ class ActivitiesController < ApplicationController
   def checkout
     #@activity = Activity.find(params[:activity][:id])
     #render JSON.parse(params)
+    5.times do
+      @activity.todos.build
+    end
   end
   
   def checkout_update
+    @activity.update(activity_params)
     @activity.activity_status_id = 3
     @activity.save
     redirect_to root_path
@@ -75,8 +79,10 @@ class ActivitiesController < ApplicationController
     end
     
     def activity_params
-      params.require(:activity).permit(:opportunity_id, :activity_status_id, :probability, :date_created, :opportunity_stage_code, :log_type,
-                                        :due_date, :employee_id, :priority_code, :description, :comment,
-                                        :schedule_datetime, :schedule_place_name, :schedule_latitude, :schedule_longitude)
+      params.require(:activity).permit(:opportunity_id, :activity_status_id, :probability, :date_created, :opportunity_stage_id, :log_type_id,
+                                        :due_date, :user_id, :priority_id, :description, :communication_type_id,
+                                        :schedule_start_at, :schedule_end_at, :schedule_place_name, :schedule_latitude, :schedule_longitude,
+                                        :actual_start_at, :actual_end_at, :attendees, :activity_feeling_id, :comment,
+                                        todos_attributes: [:id, :todo_status_id, :todo_name, :description, :due_date, :todo_priority_id])
     end
 end

@@ -138,7 +138,7 @@
                   icon: image<%=activity.id%>
               });
               var content<%=activity.id%> = "";
-              content<%=activity.id%> = "<h4><%=activity.schedule_place_name%></h4><p><%=activity.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p")%></p>"
+              content<%=activity.id%> = "<h4><%=activity.schedule_place_name%></h4><p><%=activity.schedule_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p")%></p>"
               <% if activity.activity_status_id == 1 %>
                    <%# , remote: true %>
                 + '<%= form_for activity, url: checkin_activities_path(activity), method: :update, id: "activity-form" do |f| %>'
@@ -172,11 +172,12 @@
       <div class="form-group">
         <%= hidden_field_tag :latitude, value: '' %>
         <%= hidden_field_tag :longitude, value: '' %>
-        <div class="col-xs-offset-2 col-xs-2"><%= button_tag(type: :submit, class: "btn btn-sm btn-success") do %>Check-in<% end %></div>
+        <!--<div class="col-xs-offset-2 col-xs-2"><%= button_tag(type: :submit, class: "btn btn-sm btn-success") do %>Check-in<% end %></div>-->
       </div>
     <% end %>
   </div>
 <% if @today_activities %>
+  <% if @today_activities.all.count != 0 %>
   <div class="row" style="padding-bottom:30px;">
     <table class="table table-bordered table-hover table-sm">
       <thead class="thead-light">
@@ -196,13 +197,14 @@
           </td>
           <td><%=index + 1%></td>
           <td><%= activity.activity_status.activity_status_name if activity.activity_status %></td>
-          <td><%= activity.schedule_datetime.try(:strftime, "%Y-%m-%d %l:%M:%S %p") %></td>
+          <td><%= activity.schedule_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p") %></td>
           <td><%= activity.schedule_place_name %></td>
         </tr>
         <% end %>
       </tbody>
     </table>
   </div>
+  <% end %>
 <% end %>
 
 </div>

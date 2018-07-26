@@ -40,16 +40,19 @@
     </script>
   </div>
 
+<% if @customers.all.count != 0 %>
+  <br />
   <div class="row">
         <table class="table table-bordered table-hover table-sm">
           <thead class="thead-light">
             <tr>
               <th class="col-xs-1"></th>
               <th class="col-xs-3">Company Name</th>
-              <th class="col-xs-2">Name</th>
-              <th class="col-xs-2">Title</th>
-              <th class="col-xs-2">Department</th>
-              <th class="col-xs-2">Tel#</th>
+              <th class="col-xs-1 hidden-xs">Industry</th>
+              <th class="col-xs-2 hidden-xs">Contact Name</th>
+              <th class="col-xs-1 hidden-xs">Title</th>
+              <th class="col-xs-2 hidden-xs">Department</th>
+              <th class="col-xs-2 hidden-xs">Tel#</th>
             </tr>
           </thead>
           <tbody>
@@ -59,14 +62,16 @@
                 <%= link_to "Detail", edit_customer_path(customer), class: "btn btn-info btn-sm" %>
               </td>
               <td class="col-xs-3"><%= customer.company_name %></td>
-              <td class="col-xs-2"><%= "#{customer.contact_first_name} #{customer.contact_last_name}" %></td>
-              <td class="col-xs-2"><%= customer.contact_title %></td>
-              <td class="col-xs-2"><%= customer.contact_department %></td>
-              <td class="col-xs-2"><%= customer.contact_tel %></td>
+              <td class="col-xs-1"><%= customer.industry %></td>
+              <td class="col-xs-2 hidden-xs"><%= "#{customer.staffs.first.first_name} #{customer.staffs.first.last_name}" %></td>
+              <td class="col-xs-1 hidden-xs"><%= customer.staffs.first.title %></td>
+              <td class="col-xs-2 hidden-xs"><%= customer.staffs.first.department %></td>
+              <td class="col-xs-2 hidden-xs"><%= customer.staffs.first.tel %></td>
             </tr>
             <% end %>
           </tbody>
         </table>
         <%= will_paginate @customers %>
   </div>
+<% end %>
 <% end %>

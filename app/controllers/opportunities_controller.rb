@@ -58,8 +58,9 @@ class OpportunitiesController < ApplicationController
     end
     
     def opportunity_params
-      params.require(:opportunity).permit(:date_created, :customer_id, :opportunity_name, :opportunity_description, :lead_source_code,
-                                          :expected_revenue_amount, :current_expected_revenue_amount, :employee_id, :opportunity_stage_code)
+      params.require(:opportunity).permit(:date_created, :customer_id, :opportunity_name, :opportunity_description, :lead_source_id,
+                                          :expected_revenue_amount, :current_expected_revenue_amount, :user_id, :opportunity_stage_id,
+                                          :grade_id, :actual_sales_amount)
     end
     
 end

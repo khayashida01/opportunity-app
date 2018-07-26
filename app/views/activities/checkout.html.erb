@@ -6,6 +6,58 @@
       <div class="panel-heading" style="font-weight:bold;">Check-Out</div>
       <div class="panel-body">
         <%= form_for(@activity, url: checkout_update_activities_path(@activity), :html => {class: "form-horizontal", role: "form"}) do |f| %>
+          <div class="form-group">
+            <div class="col-md-3">
+              <%= f.label :actual_start_at, "Datetime (Start)" %>
+              <%= f.text_field :actual_start_at, value: f.object.actual_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
+                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+            </div>
+            <div class="col-md-3">
+              <%= f.label :actual_end_at, "Datetime (End)" %>
+              <%= f.text_field :actual_end_at, value: f.object.actual_end_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
+                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-3">
+              <%= f.label :activity_status_id, "Status" %>
+              <%= f.collection_select :activity_status_id, ActivityStatus.all, :id, :activity_status_name, {:include_blank => false}, {class: "form-control"} %>
+            </div>
+            <div class="col-md-9">
+              <%= f.label :attendees, "Attendees" %>
+              <%= f.text_field :attendees, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-md-3">
+              <%= f.label :activity_feeling_id, "Feeling" %>
+              <%= f.collection_radio_buttons :activity_feeling_id, ActivityFeeling.all, :id, :activity_feeling_name, {class: "checkbox-inline"} %>
+            </div>
+          </div>
+          
+          <div class="form-group row">
+            <table class="table table-bordered table-hover table-sm">
+              <thead class="thead-light">
+                <tr>
+                  <th class="col-md-2">Priority</th>
+                  <th class="col-md-6">TODO</th>
+                  <th class="col-md-2">Date Due</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @activity.todos.each do |todo| %>
+                  <%= f.fields_for :todos, todo do |tf| %>
+                  <tr>
+                    <td class="col-md-2"><%= tf.collection_select :todo_priority_id, TodoPriority.all, :id, :todo_priority_name, {:include_blank => true}, {class: "form-control"} %></td>
+                    <td class="col-md-6"><%= tf.text_field :todo_name, class: "form-control" %></td>
+                    <td class="col-md-2"><%= tf.text_field :due_date, value:f.object.due_date.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %></td>
+                  </td>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+
           <div class="form-group row">
             <div class="col-md-12">
               <%= f.label :comment, "Follow up - Comments" %>
