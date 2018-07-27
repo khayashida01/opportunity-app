@@ -1,0 +1,41 @@
+
+<% if @opportunity.activities %>
+  <div class="row">
+
+    <% if @opportunity.activities.all.count != 0 %>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="font-weight:bold;">2. Activities</div>
+        <div class="panel-body">
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="col-xs-1"></th>
+                <th class="col-xs-1">Status</th>
+                <th class="col-xs-1">Date</th>
+                <th class="col-xs-1">Log Type</th>
+                <th class="col-xs-1">Due Date</th>
+                <th class="col-xs-1">Priority</th>
+                <th class="col-xs-6">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @opportunity.activities.each do |activity| %>
+            <tr>
+                <td scope="row" class="col-xs-1" style="text-align:center; vertical-align:middle;">
+                <%= link_to "Detail", activity_path(activity), class: "btn btn-info btn-sm" %>
+                </td>
+                <td class="col-xs-1"><%= activity.activity_status.activity_status_name if activity.activity_status %></td>
+                <td class="col-xs-1"><%= activity.date_created %></td>
+                <td class="col-xs-1"><%= activity.log_type.log_type_name if activity.log_type %></td>
+                <td class="col-xs-1"><%= activity.due_date %></td>
+                <td class="col-xs-1"><%= activity.priority.priority_name if activity.priority %></td>
+                <td class="col-xs-1"><%= activity.description %></td>
+            </tr>
+            <% end %>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <% end %>
+  </div>
+<% end %>

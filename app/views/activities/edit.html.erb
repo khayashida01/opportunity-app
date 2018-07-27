@@ -106,5 +106,50 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading" style="font-weight:bold;">2. Acticity Result</div>
+      <div class="panel-body">
+        <%= form_for(@activity, :html => {class: "form-horizontal", role: "form"}) do |f| %>
+          <div class="form-group row">
+            <div class="col-md-4">
+              <%= f.label :actual_start_at, "Datetime (Start)" %>
+              <%= f.text_field :actual_start_at, value: f.object.actual_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
+                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+            </div>
+            <div class="col-md-4">
+              <%= f.label :actual_end_at, "Datetime (End)" %>
+              <%= f.text_field :actual_end_at, value: f.object.actual_end_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
+                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-3">
+              <%= f.label :activity_feeling_id, "Feeling" %>
+              <%= f.collection_radio_buttons :activity_feeling_id, ActivityFeeling.all, :id, :activity_feeling_name, {class: "checkbox-inline"} %>
+            </div>
+            <div class="col-md-9">
+              <%= f.label :attendees, "Attendees" %>
+              <%= f.text_field :attendees, class: "form-control" %>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <%= f.label :comment, "Follow up - Comments" %>
+              <%= f.text_area :comment, rows: 4, class: "form-control" %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="col-md-10">
+            <%= f.submit "Submit", class: "btn btn-primary btn-sm" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <%= render 'activities/todos_result'%>
 
 </div>

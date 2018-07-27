@@ -1,0 +1,37 @@
+
+<% if @activity.todos %>
+  <div class="row">
+
+    <% if @activity.todos.all.count != 0 %>
+    <div class="panel panel-default">
+        <div class="panel-heading" style="font-weight:bold;">3. Todos</div>
+        <div class="panel-body">
+        <table class="table table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+                <th class="col-xs-1">Status</th>
+                <th class="col-xs-1">Date</th>
+                <th class="col-xs-1">Priority</th>
+                <th class="col-xs-1">Due Date</th>
+                <th class="col-xs-3">Todo</th>
+                <th class="col-xs-5">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @activity.todos.each do |todo| %>
+            <tr>
+                <td class="col-xs-1"><%= todo.todo_status.todo_status_name if todo.todo_status %></td>
+                <td class="col-xs-1"><%= todo.date_created %></td>
+                <td class="col-xs-1"><%= todo.todo_priority.todo_priority_name if todo.todo_priority %></td>
+                <td class="col-xs-1"><%= todo.due_date %></td>
+                <td class="col-xs-3"><%= todo.todo_name %></td>
+                <td class="col-xs-5"><%= todo.description %></td>
+            </tr>
+            <% end %>
+            </tbody>
+        </table>
+        </div>
+    </div>
+    <% end %>
+  </div>
+<% end %>
