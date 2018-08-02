@@ -34,7 +34,7 @@
       <ul>
         <li class="lbl col-xs-1"><%= f.label :date_created, "Date" %></li>
         <!--<li><input type="text" value="2018/02/02" size="10"/></li>-->
-        <li class="col-xs-2"><%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "datepicker", data:{ provide:'datepicker' }, size: '10' %></li>
+        <li class="col-xs-2"><%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "mydatepicker", data:{ provide:'datepicker' }, size: '10' %></li>
         
         <li class="lbl col-xs-1"><%= f.label :sales, "Sales" %></li>
         <!--<li><input type="text" value="" size="10"/></li>-->

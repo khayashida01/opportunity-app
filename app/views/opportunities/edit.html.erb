@@ -13,7 +13,7 @@
             </div>
             <div class="col-md-2">
               <%= f.label :date_created, "Date" %>
-              <%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %>
+              <%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control mydatepicker", data:{ provide:'datepicker' } %>
             </div>
             <div class="col-md-4">
               <%= f.label :opportunity_stage_id, "Stage" %>

@@ -23,6 +23,8 @@
               var content<%=customer.id%> = "";
               content<%=customer.id%> = "<h4><%=customer.company_name%></h4>"
                 + '<%= link_to "Detail", edit_customer_path(customer), class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
+                + '&nbsp;<%= link_to "New Opportunity", new_opportunity_path(customer_id: customer.id), class: "btn btn-xs btn-success", :target=>["_blank"] %>'
+                + '&nbsp;<%= link_to "New Activity", new_activity_path(customer_id: customer.id), class: "btn btn-xs btn-success", :target=>["_blank"] %>'
                 + '';
               
               var infowindow<%=customer.id%> = new google.maps.InfoWindow({

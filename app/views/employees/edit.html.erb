@@ -40,7 +40,7 @@
               </div>
               <div class="col-xs-4">
                 <%= f.label :date_of_birth, "Date of Birth" %>
-                <%= f.text_field :date_of_birth, value:f.object.date_of_birth.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %>
+                <%= f.text_field :date_of_birth, value:f.object.date_of_birth.try(:strftime,"%Y-%m-%d"), class: "form-control mydatepicker", data:{ provide:'datepicker' } %>
               </div>
               <div class="col-xs-4">
                 <%= f.label :work_location, "Work Location" %>

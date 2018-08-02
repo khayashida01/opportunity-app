@@ -1,37 +1,42 @@
 
 <% if @activity.todos %>
   <div class="row">
-
-    <% if @activity.todos.all.count != 0 %>
     <div class="panel panel-default">
         <div class="panel-heading" style="font-weight:bold;">3. Todos</div>
         <div class="panel-body">
+        <%= form_for(@activity, :html => {class: "form-horizontal", role: "form"}) do |f| %>
         <table class="table table-bordered table-hover table-sm">
             <thead class="thead-light">
             <tr>
-                <th class="col-xs-1">Status</th>
-                <th class="col-xs-1">Date</th>
-                <th class="col-xs-1">Priority</th>
-                <th class="col-xs-1">Due Date</th>
-                <th class="col-xs-3">Todo</th>
-                <th class="col-xs-5">Description</th>
+                <th class="col-md-1">Status</th>
+                <th class="col-md-1">Date</th>
+                <th class="col-md-1">Priority</th>
+                <th class="col-md-1">Due Date</th>
+                <th class="col-md-3">Todo</th>
+                <th class="col-md-4">Description</th>
+                <th class="col-md-1"></th>
             </tr>
             </thead>
             <tbody>
-            <% @activity.todos.each do |todo| %>
-            <tr>
-                <td class="col-xs-1"><%= todo.todo_status.todo_status_name if todo.todo_status %></td>
-                <td class="col-xs-1"><%= todo.date_created %></td>
-                <td class="col-xs-1"><%= todo.todo_priority.todo_priority_name if todo.todo_priority %></td>
-                <td class="col-xs-1"><%= todo.due_date %></td>
-                <td class="col-xs-3"><%= todo.todo_name %></td>
-                <td class="col-xs-5"><%= todo.description %></td>
-            </tr>
-            <% end %>
+                <%= f.nested_fields_for :todos, wrapper_tag: :tr do |tf| %>
+                    <td class="col-md-1"><%= tf.collection_select :todo_status_id, TodoStatus.all, :id, :todo_status_name, {:include_blank => true}, {class: "form-control"} %></td>
+                    <td class="col-md-1"><%= tf.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control mydatepicker", data:{ provide:'datepicker' } %></td>
+                    <td class="col-md-1"><%= tf.collection_select :todo_priority_id, TodoPriority.all, :id, :todo_priority_name, {:include_blank => true}, {class: "form-control"} %></td>
+                    <td class="col-md-1"><%= tf.text_field :due_date, value:f.object.due_date.try(:strftime,"%Y-%m-%d"), class: "form-control mydatepicker", data:{ provide:'datepicker' } %></td>
+                    <td class="col-md-3"><%= tf.text_field :todo_name, class: "form-control" %></td>
+                    <td class="col-md-5"><%= tf.text_field :description, class: "form-control" %></td>
+                    <td class="col-md-1"><%= tf.remove_nested_fields_link 'Delete', class: 'btn btn-danger btn-sm', role: 'button' %></td>
+                <% end %>
             </tbody>
         </table>
+        <%= f.add_nested_fields_link :todos, 'Add new', class: 'btn btn-primary btn-sm', role: 'button' %>
+        <div class="form-group">
+            <div class="col-md-10">
+                <%= f.submit "Submit", class: "btn btn-primary btn-sm" %>
+            </div>
+        </div>
+        <% end %>
         </div>
     </div>
-    <% end %>
   </div>
 <% end %>

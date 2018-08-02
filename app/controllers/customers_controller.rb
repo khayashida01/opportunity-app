@@ -22,9 +22,7 @@ class CustomersController < ApplicationController
 
   def new
     @customer = Customer.new
-    5.times do
-      @customer.staffs.build
-    end
+    @customer.staffs.build
     @customer.company_name = params[:company_name]
     @customer.latitude = params[:latitude]
     @customer.longitude = params[:longitude]
@@ -41,9 +39,6 @@ class CustomersController < ApplicationController
   end
   
   def edit
-    (5 - @customer.staffs.count).times do
-      @customer.staffs.build
-    end
     set_customer_map
   end
   
@@ -75,7 +70,7 @@ class CustomersController < ApplicationController
                                         :bill_to_state, :bill_to_zip_code, :bill_to_country, :ship_to_first_name, :ship_to_last_name,
                                         :ship_to_tel, :ship_to_email, :ship_to_street, :ship_to_city, :ship_to_state, :ship_to_zip_code,
                                         :ship_to_country, :latitude, :longitude,
-                                        staffs_attributes: [:id, :first_name, :last_name, :title, :department, :tel, :email])
+                                        staffs_attributes: [:id, :first_name, :last_name, :title, :department, :tel, :email, :_destroy])
     end
 
     def set_customer_map

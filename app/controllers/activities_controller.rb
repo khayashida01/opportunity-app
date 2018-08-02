@@ -24,6 +24,7 @@ class ActivitiesController < ApplicationController
   
   def new
     @activity = Activity.new
+    @activity.opportunity_id = params[:opportunity_id]
     @activity.date_created = Time.zone.now.strftime("%Y-%m-%d")
     render 'edit'
   end
@@ -61,9 +62,6 @@ class ActivitiesController < ApplicationController
   def checkout
     #@activity = Activity.find(params[:activity][:id])
     #render JSON.parse(params)
-    5.times do
-      @activity.todos.build
-    end
   end
   
   def checkout_update
@@ -83,6 +81,6 @@ class ActivitiesController < ApplicationController
                                         :due_date, :user_id, :priority_id, :description, :communication_type_id,
                                         :schedule_start_at, :schedule_end_at, :schedule_place_name, :schedule_latitude, :schedule_longitude,
                                         :actual_start_at, :actual_end_at, :attendees, :activity_feeling_id, :comment,
-                                        todos_attributes: [:id, :todo_status_id, :todo_name, :description, :due_date, :todo_priority_id])
+                                        todos_attributes: [:id, :todo_status_id, :todo_name, :description, :due_date, :todo_priority_id, :_destroy])
     end
 end

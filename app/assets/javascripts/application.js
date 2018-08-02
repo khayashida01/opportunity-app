@@ -11,20 +11,62 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require twitter/bootstrap
 //= require turbolinks
-//= require bootstrap-datepicker
 //= require Chart.min
 //= require_tree .
 //= require underscore
 //= require gmaps/google
 //= require moment
+//= require fullcalendar
 //= require bootstrap-datetimepicker
+//= require nested_form_fields
+
+
+var initialize_calendar;
+initialize_calendar = function() {
+    $('#calendar').each(function(){
+        var calendar = $(this)
+        calendar.fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
+            selectable: true,
+            selectHelpter: true,
+            editable: true,
+            eventLimit: true,
+            events: '/calendar.json'
+        })
+    })
+};
 
 $(document).on('turbolinks:load', function(){
-  $('.datepicker').datepicker({format: 'yyyy-mm-dd'});
-  $('.datetimepicker').datetimepicker({format: 'YYYY-MM-DD hh:mm:ss A'});
+    $('.mydatepicker').datetimepicker(
+        {
+            format: 'YYYY-MM-DD',
+            icons: {
+              previous: "fa fa-arrow-left",
+              next: "fa fa-arrow-right"
+            }
+        }
+    );
+    $('.datetimepicker').datetimepicker(
+        {
+            format: 'YYYY-MM-DD hh:mm A',
+            icons: {
+              time: "fa fa-clock-o",
+              date: "fa fa-calendar",
+              up: "fa fa-arrow-up",
+              down: "fa fa-arrow-down",
+              previous: "fa fa-arrow-left",
+              next: "fa fa-arrow-right"
+            },
+            sideBySide: true
+        }
+    );
+  initialize_calendar();
 }).on('dp.error', function(e) {
   $(e.target).val('');
 });

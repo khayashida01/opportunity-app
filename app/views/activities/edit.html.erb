@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-2">
               <%= f.label :date_created, "Date Created" %>
-              <%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control datepicker", data:{ provide:'datepicker' } %>
+              <%= f.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control mydatepicker", data:{ provide:'datepicker' } %>
             </div>
             <div class="col-md-2">
               <%= f.label :opportunity_stage_id, "Opportunity Stage" %>
@@ -39,7 +39,7 @@
             </div>
             <div class="col-md-2">
               <%= f.label :due_date, "Due Date" %>
-              <%= f.text_field :due_date, value: f.object.due_date.try(:strftime, "%Y-%m-%d"), class: "form-control datepicker", data: { provide:'datepicker'} %>
+              <%= f.text_field :due_date, value: f.object.due_date.try(:strftime, "%Y-%m-%d"), class: "form-control mydatepicker", data: { provide:'datepicker'} %>
             </div>
           </div>
           <div class="form-group row">
@@ -60,12 +60,12 @@
             <div class="col-md-4">
               <%= f.label :schedule_start_at, "Schedule (Start)" %>
               <%= f.text_field :schedule_start_at, value: f.object.schedule_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
-                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+                      data: { provide:'datetimepicker'} %>
             </div>
             <div class="col-md-4">
               <%= f.label :schedule_end_at, "Schedule (End)" %>
               <%= f.text_field :schedule_end_at, value: f.object.schedule_end_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
-                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+                      data: { provide:'datetimepicker'} %>
             </div>
           </div>
           <div class="form-group row">
@@ -115,12 +115,12 @@
             <div class="col-md-4">
               <%= f.label :actual_start_at, "Datetime (Start)" %>
               <%= f.text_field :actual_start_at, value: f.object.actual_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
-                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+                      data: { provide:'datetimepicker'} %>
             </div>
             <div class="col-md-4">
               <%= f.label :actual_end_at, "Datetime (End)" %>
               <%= f.text_field :actual_end_at, value: f.object.actual_end_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p"), class: "form-control datetimepicker",
-                      data: { provide:'datetimepicker', "date-format" => 'YYYY-MM-DD hh:mm:ss A'} %>
+                      data: { provide:'datetimepicker'} %>
             </div>
           </div>
           <div class="form-group row">

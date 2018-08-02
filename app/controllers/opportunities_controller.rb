@@ -24,6 +24,8 @@ class OpportunitiesController < ApplicationController
 
   def new
     @opportunity = Opportunity.new
+    @opportunity.customer_id = params[:customer_id]
+    @opportunity.user_id = current_user.id
     render 'edit'
   end
 

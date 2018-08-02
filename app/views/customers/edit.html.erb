@@ -50,27 +50,26 @@
                 <tr>
                   <th class="col-md-2">First Name</th>
                   <th class="col-md-2">Last Name</th>
-                  <th class="col-md-2">Title</th>
+                  <th class="col-md-1">Title</th>
                   <th class="col-md-2">Department</th>
                   <th class="col-md-2">Tel#</th>
                   <th class="col-md-2">Email</th>
+                  <th class="col-md-1"></th>
                 </tr>
               </thead>
               <tbody>
-                <% @customer.staffs.each do |staff| %>
-                  <%= f.fields_for :staffs, staff do |sf| %>
-                  <tr>
-                    <td class="col-md-2"><%= sf.text_field :first_name, class: "form-control" %></td>
-                    <td class="col-md-2"><%= sf.text_field :last_name, class: "form-control" %></td>
-                    <td class="col-md-2"><%= sf.text_field :title, class: "form-control" %></td>
-                    <td class="col-md-2"><%= sf.text_field :department, class: "form-control" %></td>
-                    <td class="col-md-2"><%= sf.text_field :tel, class: "form-control" %></td>
-                    <td class="col-md-2"><%= sf.text_field :email, class: "form-control" %></td>
-                  </td>
-                  <% end %>
+                <%= f.nested_fields_for :staffs, wrapper_tag: :tr do |sf| %>
+                  <td class="col-md-2"><%= sf.text_field :first_name, class: "form-control" %></td>
+                  <td class="col-md-2"><%= sf.text_field :last_name, class: "form-control" %></td>
+                  <td class="col-md-1"><%= sf.text_field :title, class: "form-control" %></td>
+                  <td class="col-md-2"><%= sf.text_field :department, class: "form-control" %></td>
+                  <td class="col-md-2"><%= sf.text_field :tel, class: "form-control" %></td>
+                  <td class="col-md-2"><%= sf.text_field :email, class: "form-control" %></td>
+                  <td class="col-md-1"><%= sf.remove_nested_fields_link 'Delete', class: 'btn btn-danger btn-sm', role: 'button' %></td>
                 <% end %>
               </tbody>
             </table>
+            <%= f.add_nested_fields_link :staffs, 'Add new', class: 'btn btn-primary btn-sm', role: 'button' %>
           </div>
 
           <hr />

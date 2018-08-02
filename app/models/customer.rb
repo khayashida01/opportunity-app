@@ -4,5 +4,6 @@ class Customer < ActiveRecord::Base
   has_many :quotations
   has_many :staffs
   
-  accepts_nested_attributes_for :staffs
+  accepts_nested_attributes_for :staffs, allow_destroy: true
+  
 end
