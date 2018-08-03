@@ -29,20 +29,15 @@ class WelcomeController < ApplicationController
         marker.json({title: activity.description})
       end
     end
-    @today_acticities_center_latitude = (@activities_for_staff.maximum(:schedule_latitude).to_f + @activities_for_staff.minimum(:schedule_latitude).to_f) / 2.0
-    @today_acticities_center_longitude = (@activities_for_staff.maximum(:schedule_longitude).to_f + @activities_for_staff.minimum(:schedule_longitude).to_f) / 2.0
-    
+
     # Today's activities for all users (for manager)
     if current_user.manager?
-      get_activities_for_manager
+      get_today_activities_for_manager
       @user_activity_summary = User.joins(:activities)
       .where(activities: {schedule_start_at: Date.today.beginning_of_day..Date.today.end_of_day})
       .group("users.id, users.first_name, users.last_name")
       .select("users.id, users.first_name, users.last_name, count(*) as cnt")
       .order(:id)
-        
-      @today_acticities_for_manager_center_latitude = (@activities_for_manager.maximum(:schedule_latitude).to_f + @activities_for_manager.minimum(:schedule_latitude).to_f) / 2.0
-      @today_acticities_for_manager_center_longitude = (@activities_for_manager.maximum(:schedule_longitude).to_f + @activities_for_manager.minimum(:schedule_longitude).to_f) / 2.0
     end
 
     # Open Todos
@@ -77,32 +72,40 @@ class WelcomeController < ApplicationController
   # for staff
   def today_activities
     get_today_activities
+    render 'activities_for_staff'
   end
 
   def this_week_activities
     get_activities_for_staff((Date.today - (Date.today.wday - 1)).beginning_of_day, ((Date.today - (Date.today.wday - 1)) + 6).end_of_day)
+    render 'activities_for_staff'
   end
 
   def this_month_activities
     get_activities_for_staff(Date.today.beginning_of_month.beginning_of_day, Date.today.end_of_month.end_of_day)
+    render 'activities_for_staff'
   end
 
   # for manager
   def today_activities_for_manager
     get_today_activities_for_manager
+    render 'activities_for_manager'
   end
 
   def this_week_activities_for_manager
     get_activities_for_manager((Date.today - (Date.today.wday - 1)).beginning_of_day, ((Date.today - (Date.today.wday - 1)) + 6).end_of_day)
+    render 'activities_for_manager'
   end
 
   def this_month_activities_for_manager
     get_activities_for_manager(Date.today.beginning_of_month.beginning_of_day, Date.today.end_of_month.end_of_day)
+    render 'activities_for_manager'
   end
 
   private
     def get_activities_for_staff(date_begin, date_end)
       @activities_for_staff = Activity.where(user_id: current_user.id, schedule_start_at: date_begin..date_end).order(:schedule_start_at)
+      @today_acticities_center_latitude = (@activities_for_staff.maximum(:schedule_latitude).to_f + @activities_for_staff.minimum(:schedule_latitude).to_f) / 2.0
+      @today_acticities_center_longitude = (@activities_for_staff.maximum(:schedule_longitude).to_f + @activities_for_staff.minimum(:schedule_longitude).to_f) / 2.0
     end
 
     def get_today_activities
@@ -111,6 +114,8 @@ class WelcomeController < ApplicationController
     
     def get_activities_for_manager(date_begin, date_end)
       @activities_for_manager = Activity.where(schedule_start_at: date_begin..date_end).order(:schedule_start_at)
+      @today_acticities_for_manager_center_latitude = (@activities_for_manager.maximum(:schedule_latitude).to_f + @activities_for_manager.minimum(:schedule_latitude).to_f) / 2.0
+      @today_acticities_for_manager_center_longitude = (@activities_for_manager.maximum(:schedule_longitude).to_f + @activities_for_manager.minimum(:schedule_longitude).to_f) / 2.0
     end
 
     def get_today_activities_for_manager

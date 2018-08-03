@@ -1,0 +1,42 @@
+$('#activities_for_manager').html("<%= j (render 'activities_for_manager_tmpl') %>");
+
+
+
+// Today's activities for all users (for manager)
+function initMap_for_manager() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 11,
+        center: {lat: <%= @today_acticities_for_manager_center_latitude %>,
+                lng: <%= @today_acticities_for_manager_center_longitude %>
+                },
+        mapTypeId: 'terrain'
+    });
+
+    <% @activities_for_manager.each_with_index do |activity, index| %>
+        <% if activity.schedule_latitude && activity.schedule_longitude %>
+            <%# Change icon image based on user. %>
+            var image<%=activity.id%> = '<%=image_path('upcoming_' + (activity.user_id).to_s + '.png')%>';
+            
+            var marker<%=activity.id%> = new google.maps.Marker({
+                position: new google.maps.LatLng(<%=activity.schedule_latitude%>, <%=activity.schedule_longitude%>),
+                map: map,
+                icon: image<%=activity.id%>
+            });
+            var content<%=activity.id%> = "";
+            content<%=activity.id%> = "<h4><%=activity.schedule_place_name%></h4><p><%=activity.schedule_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p")%></p>"
+            + '<p>' + '<%=activity.user.full_name%>' + '</p>'
+            + '<%= link_to "Detail", activity_path(activity), class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
+            + '';
+            
+            var infowindow<%=activity.id%> = new google.maps.InfoWindow({
+                content: content<%=activity.id%>,
+                maxWidth: 200
+            });
+            google.maps.event.addListener(marker<%=activity.id%>, 'click', function() {
+                infowindow<%=activity.id%>.open(map,marker<%=activity.id%>);
+            });
+        <% end %>
+    <% end %>
+    return map;
+}
+initMap_for_manager();

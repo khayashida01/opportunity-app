@@ -1,0 +1,38 @@
+
+<% if @todos %>
+  <div class="row col-md-12" style="padding-bottom:30px;">
+    <blockquote>Open TODOs for you</blockquote>
+    <% if !@todos.exists? %>
+      No open TODOs.
+    <% else %>
+      <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th class="col-md-1"></th>
+            <th class="col-md-1">Status</th>
+            <th class="col-md-1">Date Created</th>
+            <th class="col-md-1">Priority</th>
+            <th class="col-md-1">Due Date</th>
+            <th class="col-md-3">Todo</th>
+            <th class="col-md-4">Description</th>
+          </tr> 
+        </thead>
+        <tbody>
+          <% @todos.each_with_index do |todo, index| %>
+          <tr>
+            <td scope="row" style="text-align:center; vertical-align:middle;">
+              <%= link_to "Detail", activity_path(id: todo.activity_id), class: "btn btn-primary btn-sm" %>
+            </td>
+            <td class="col-md-1"><%= todo.todo_status.todo_status_name %></td>
+            <td class="col-md-1"><%= todo.date_created %></td>
+            <td class="col-md-1"><%= todo.todo_priority.todo_priority_name %></td>
+            <td class="col-md-1"><%= todo.due_date %></td>
+            <td class="col-md-1"><%= todo.todo_name %></td>
+            <td class="col-md-1"><%= todo.description %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+<% end %>

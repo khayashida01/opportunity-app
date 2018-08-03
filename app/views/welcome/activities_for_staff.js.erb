@@ -1,0 +1,119 @@
+$('#activities_for_staff').html("<%= j (render 'activities_for_staff_tmpl') %>");
+
+
+// Today's activities for current user
+function initMap_for_staff() {
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        <%# center: {lat: 40.742966, lng: -74.006865}, %>
+        center: {lat: <%= @today_acticities_center_latitude %>, lng: <%= @today_acticities_center_longitude %>},
+        mapTypeId: 'terrain'
+    });
+
+    // var flightPlanCoordinates = [
+    //   {lat: 37.772, lng: -122.214},
+    //   {lat: 21.291, lng: -157.821},
+    //   {lat: -18.142, lng: 178.431},
+    //   {lat: -27.467, lng: 153.027}
+    // ];
+    var flightPlanCoordinates = [
+        <% @activities_for_staff.each do |activity| %>
+        <% if activity.schedule_latitude && activity.schedule_longitude %>
+            <%= "{lat: " + activity.schedule_latitude.to_s + ", lng: " + activity.schedule_longitude.to_s + "}," %>
+        <% end %>
+        <% end %>
+    ];
+    var flightPath = new google.maps.Polyline({
+        path: flightPlanCoordinates,
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+    });
+
+    flightPath.setMap(map);
+
+    // var image='<%=image_path('clock.png')%>';
+    // var marker1=new google.maps.Marker({
+    //     position: new google.maps.LatLng(40.742966, -74.006865),
+    //     map: map,
+    //     icon: image
+    // });
+    // var infowindow1=new google.maps.InfoWindow({
+    //     content: "<b>Test</b><h2>Hey!</h2>",
+    //     maxWidth:200
+    // });
+    // google.maps.event.addListener(marker1, 'click', function() {
+    //     infowindow1.open(map,marker1);
+    // });
+
+    <% @activities_for_staff.each_with_index do |activity, index| %>
+        <% if activity.schedule_latitude && activity.schedule_longitude %>
+        <%# Change icon image based on activity status. %>
+        <% if activity.activity_status_id == 1 %>
+            var image<%=activity.id%> = '<%=image_path('upcoming_' + (index + 1).to_s + '.png')%>';
+        <% elsif activity.activity_status_id == 2 %>
+            var image<%=activity.id%> = '<%=image_path('clock.png')%>';
+        <% elsif activity.activity_status_id == 5 %>
+            var image<%=activity.id%> = '<%=image_path('canceled.png')%>';
+        <% else %>
+            var image<%=activity.id%> = '<%=image_path('number_' + (index + 1).to_s + '.png')%>';
+        <% end %>
+        
+        var marker<%=activity.id%> = new google.maps.Marker({
+            position: new google.maps.LatLng(<%=activity.schedule_latitude%>, <%=activity.schedule_longitude%>),
+            map: map,
+            icon: image<%=activity.id%>
+        });
+        var content<%=activity.id%> = "";
+        content<%=activity.id%> = "<h4><%=activity.schedule_place_name%></h4><p><%=activity.schedule_start_at.try(:strftime, "%Y-%m-%d %l:%M:%S %p")%></p>"
+        <% if activity.activity_status_id == 1 %>
+                <%# , remote: true %>
+            + '<%= form_for activity, url: checkin_activities_path(activity), method: :update, id: "activity-form" do |f| %>'
+            + '<%= f.hidden_field :id %>'
+            + '<%= button_tag(type: :submit, class: "btn btn-sm btn-success", name: "check-in") do %>Check-In<% end %>&nbsp;'
+            + '<% end %>'
+        <% elsif activity.activity_status_id == 2 %>
+            + '<%= link_to "Check-Out", checkout_activities_path(activity), class: "btn btn-xs btn-danger" %>'
+        <% else %>
+            + '<%= link_to "Detail", activity_path(activity), class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
+        <% end %>
+            + '';
+        
+        var infowindow<%=activity.id%> = new google.maps.InfoWindow({
+            content: content<%=activity.id%>,
+            maxWidth: 200
+        });
+        google.maps.event.addListener(marker<%=activity.id%>, 'click', function() {
+            infowindow<%=activity.id%>.open(map,marker<%=activity.id%>);
+        });
+        <% end %>
+    <% end %>
+
+    <% if @all_customers %>
+        <% @all_customers.each_with_index do |customer, index| %>
+        <% if customer.latitude && customer.longitude %>
+            var image<%=customer.id%> = '<%=image_path('clock.png')%>';
+            var marker<%=customer.id%> = new google.maps.Marker({
+                position: new google.maps.LatLng(<%=customer.latitude%>, <%=customer.longitude%>),
+                map: map
+            });
+            var content<%=customer.id%> = "";
+            content<%=customer.id%> = "<h4><%=customer.company_name%></h4>"
+            + '<%= link_to "Detail", customer_path(customer), class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
+            + '';
+            
+            var infowindow<%=customer.id%> = new google.maps.InfoWindow({
+                content: content<%=customer.id%>,
+                maxWidth: 200
+            });
+            google.maps.event.addListener(marker<%=customer.id%>, 'click', function() {
+                infowindow<%=customer.id%>.open(map,marker<%=customer.id%>);
+            });
+        <% end %>
+        <% end %>
+    <% end %>
+
+    return map;
+}
+initMap_for_staff();
