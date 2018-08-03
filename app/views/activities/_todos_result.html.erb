@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 <%= f.nested_fields_for :todos, wrapper_tag: :tr do |tf| %>
-                    <td class="col-md-1"><%= tf.collection_select :todo_status_id, TodoStatus.all, :id, :todo_status_name, {:include_blank => true}, {class: "form-control"} %></td>
+                    <td class="col-md-1"><%= tf.collection_select :todo_status_id, TodoStatus.all, :id, :todo_status_name, {:include_blank => false}, {class: "form-control"} %></td>
                     <td class="col-md-1"><%= tf.text_field :date_created, value:f.object.date_created.try(:strftime,"%Y-%m-%d"), class: "form-control mydatepicker", data:{ provide:'datepicker' } %></td>
                     <td class="col-md-1"><%= tf.collection_select :todo_priority_id, TodoPriority.all, :id, :todo_priority_name, {:include_blank => true}, {class: "form-control"} %></td>
                     <td class="col-md-1"><%= tf.text_field :due_date, value:f.object.due_date.try(:strftime,"%Y-%m-%d"), class: "form-control mydatepicker", data:{ provide:'datepicker' } %></td>

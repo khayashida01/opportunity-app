@@ -1,0 +1,33 @@
+
+    <% if !@activities_for_manager.exists? %>
+      No planned activity.
+    <% else %>
+      <table class="table table-bordered table-hover table-sm">
+        <thead class="thead-light">
+          <tr>
+            <th class="col-md-1"></th>
+            <th class="col-md-1">#</th>
+            <th class="col-md-2">Assign-To</th>
+            <th class="col-md-1">Status</th>
+            <th class="col-md-2">Schedule (Start)</th>
+            <th class="col-md-2">Schedule (End)</th>
+            <th class="col-md-3">Place</th>
+          </tr> 
+        </thead>
+        <tbody>
+          <% @activities_for_manager.each_with_index do |activity, index| %>
+          <tr>
+            <td scope="row" style="text-align:center; vertical-align:middle;">
+              <%= link_to "Detail", activity_path(activity), class: "btn btn-primary btn-sm" %>
+            </td>
+            <td><%=index + 1%></td>
+            <td><%= activity.user.full_name if activity.user %></td>
+            <td><%= activity.activity_status.activity_status_name if activity.activity_status %></td>
+            <td><%= activity.schedule_start_at.try(:strftime, "%Y-%m-%d %l:%M %p") %></td>
+            <td><%= activity.schedule_end_at.try(:strftime, "%Y-%m-%d %l:%M %p") %></td>
+            <td><%= activity.schedule_place_name %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>

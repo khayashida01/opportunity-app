@@ -26,6 +26,8 @@ class ActivitiesController < ApplicationController
     @activity = Activity.new
     @activity.opportunity_id = params[:opportunity_id]
     @activity.date_created = Time.zone.now.strftime("%Y-%m-%d")
+    @activity.activity_status_id = ApplicationHelper::ACTIVITY_STATUS_NEW
+    @activity.user_id = current_user.id
     render 'edit'
   end
   
@@ -75,7 +77,7 @@ class ActivitiesController < ApplicationController
     def set_activity
       @activity = Activity.find(params[:id])
     end
-    
+
     def activity_params
       params.require(:activity).permit(:opportunity_id, :activity_status_id, :probability, :date_created, :opportunity_stage_id, :log_type_id,
                                         :due_date, :user_id, :priority_id, :description, :communication_type_id,

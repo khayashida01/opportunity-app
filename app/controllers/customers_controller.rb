@@ -9,9 +9,10 @@ class CustomersController < ApplicationController
     @customer_search_text = params[:customer_search_text]
     @customers = nil
     if @customer_search_text.blank?
-      @customers = Customer.where("company_name LIKE ?", "%#{@customer_search_text}%").paginate(page: params[:page], per_page: 5)
+      @customers = Customer.paginate(page: params[:page], per_page: 5)
     else
-      @customers = Customer.where("company_name LIKE ?", "%#{@customer_search_text}%").paginate(page: params[:page], per_page: 5)
+      @customers = Customer.joins(:staffs).where("company_name LIKE ? or staffs.first_name || staffs.last_name LIKE ? or industry LIKE ?",
+                      "%#{@customer_search_text}%", "%#{@customer_search_text}%", "%#{@customer_search_text}%").paginate(page: params[:page], per_page: 5).select("Customers.*").distinct
       if @customers.empty?
         @customers = nil
         flash.now[:danger] = "No customer found"
@@ -44,6 +45,7 @@ class CustomersController < ApplicationController
   
   def show
     set_customer_map
+    render 'edit'
   end
   
   def update
@@ -65,7 +67,7 @@ class CustomersController < ApplicationController
     end
     
     def customer_params
-      params.require(:customer).permit(:company_name, :industry_code, :url, :business_description, :contact_first_name, :contact_last_name,
+      params.require(:customer).permit(:company_name, :industry, :url, :business_description, :contact_first_name, :contact_last_name,
                                         :contact_title, :contact_department, :contact_tel, :contact_email, :bill_to_street, :bill_to_city,
                                         :bill_to_state, :bill_to_zip_code, :bill_to_country, :ship_to_first_name, :ship_to_last_name,
                                         :ship_to_tel, :ship_to_email, :ship_to_street, :ship_to_city, :ship_to_state, :ship_to_zip_code,

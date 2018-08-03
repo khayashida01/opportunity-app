@@ -26,11 +26,19 @@ Rails.application.routes.draw do
   patch 'activities/:id/checkout' => 'activities#checkout_update', as: 'checkout_update_activities'
 
   #get 'welcome_test' => 'welcome#test'
+  get 'welcome_today_activities' => 'welcome#today_activities'
+  get 'welcome_this_week_activities' => 'welcome#this_week_activities'
+  get 'welcome_this_month_activities' => 'welcome#this_month_activities'
+  get 'welcome_today_activities_for_manager' => 'welcome#today_activities_for_manager'
+  get 'welcome_this_week_activities_for_manager' => 'welcome#this_week_activities_for_manager'
+  get 'welcome_this_month_activities_for_manager' => 'welcome#this_month_activities_for_manager'
 
   resources :quotations
   get 'search_quotations' => 'quotations#search'
   
   resources :quotation_comments
+
+  resources :calendar
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

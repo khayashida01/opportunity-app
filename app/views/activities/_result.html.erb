@@ -8,8 +8,9 @@
           <tr>
             <th class="col-xs-1"></th>
             <th class="col-xs-1">Date</th>
-            <th class="col-xs-2">Opportunity Name</th>
-            <th class="col-xs-1">Opportunity Stage</th>
+            <th class="col-xs-3">Opportunity Name</th>
+            <th class="col-xs-2">Opportunity Stage</th>
+            <th class="col-xs-2">Assign To</th>
             <th class="col-xs-1">Due Date</th>
             <th class="col-xs-1">Priority</th>
           </tr>
@@ -21,8 +22,9 @@
               <%= link_to "Detail", activity_path(activity), class: "btn btn-info btn-sm" %>
             </td>
             <td class="col-xs-1"><%= activity.date_created %></td>
-            <td class="col-xs-2"><%= activity.opportunity.opportunity_name if activity.opportunity %></td>
-            <td class="col-xs-1"><%= activity.opportunity.opportunity_stage.opportunity_stage_name if activity.opportunity && activity.opportunity.opportunity_stage %></td>
+            <td class="col-xs-3"><%= activity.opportunity.opportunity_name if activity.opportunity %></td>
+            <td class="col-xs-2"><%= activity.opportunity.opportunity_stage.opportunity_stage_name if activity.opportunity && activity.opportunity.opportunity_stage %></td>
+            <td class="col-xs-2"><%= activity.user.full_name if activity.user %></td>
             <td class="col-xs-1"><%= activity.due_date %></td>
             <td class="col-xs-1"><%= activity.priority.priority_name if activity.priority %></td>
           </tr>

@@ -17,8 +17,7 @@
           <% if customer.latitude && customer.longitude %>
               var marker<%=customer.id%> = new google.maps.Marker({
                   position: new google.maps.LatLng(<%=customer.latitude%>, <%=customer.longitude%>),
-                  map: map,
-                  icon: '<%=image_path('clock.png')%>'
+                  map: map
               });
               var content<%=customer.id%> = "";
               content<%=customer.id%> = "<h4><%=customer.company_name%></h4>"

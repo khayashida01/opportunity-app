@@ -42,5 +42,6 @@ Rails.application.configure do
 
   # K.Hayashida
   config.web_console.whitelisted_ips = '0.0.0.0/0'
-
+  config.assets.compress = false
+  
 end

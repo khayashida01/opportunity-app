@@ -41,8 +41,8 @@ initialize_calendar = function() {
         })
     })
 };
-
-$(document).on('turbolinks:load', function(){
+var update_datepicker;
+update_datepicker = function () {
     $('.mydatepicker').datetimepicker(
         {
             format: 'YYYY-MM-DD',
@@ -66,7 +66,15 @@ $(document).on('turbolinks:load', function(){
             sideBySide: true
         }
     );
+}
+
+$(document).on('turbolinks:load', function(){
+  update_datepicker();
   initialize_calendar();
 }).on('dp.error', function(e) {
   $(e.target).val('');
+});
+
+$(document).on('fields_added.nested_form_fields', function(event){
+    update_datepicker();
 });

@@ -1,4 +1,6 @@
 module ApplicationHelper
+  
+  # Quotation
   QUOTATION_STATUS_NEW = 0
   QUOTATION_STATUS_SUBMITTED = 1
   QUOTATION_STATUS_REVIEWED = 2
@@ -10,4 +12,18 @@ module ApplicationHelper
   def get_quotation_status_name(quotation_status_id)
     return QUOTATION_STATUS[quotation_status_id]
   end
+
+  # Group
+  GROUP_EMPLOYEE = 1
+  GROUP_SUPPLIER = 2
+
+  # Role
+  ROLE_MANAGER = 1
+  ROLE_STAFF = 2
+
+  # Activity Status
+  ACTIVITY_STATUS_NEW = 1
+
+  # Todo Status
+  TODO_STATUS_NEW = 1
 end

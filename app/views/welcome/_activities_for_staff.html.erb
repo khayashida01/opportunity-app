@@ -1,0 +1,14 @@
+
+<% if @activities_for_staff %>
+  <div class="row col-md-12" style="padding-bottom:30px;">
+    <blockquote>Your Activities</blockquote>
+    <div class="btn-group">
+        <%= link_to "Today", welcome_today_activities_path, remote: true, class: "btn btn-primary btn-sm" %>
+        <%= link_to "This Week", welcome_this_week_activities_path, remote: true, class: "btn btn-primary btn-sm" %>
+        <%= link_to "This Month", welcome_this_month_activities_path, remote: true, class: "btn btn-primary btn-sm" %>
+    </div>
+    <div id="activities_for_staff">
+      <%= render 'welcome/activities_for_staff_tmpl'%>
+    </div>
+  </div>
+<% end %>
