@@ -1,4 +1,6 @@
 class WelcomeController < ApplicationController
+  before_action :get_all_customers, only: [:index, :today_activities, :this_week_activities, :this_month_activities,
+                                          :today_activities_for_manager, :this_week_activities_for_manager, :this_month_activities_for_manager]
   respond_to :html, :js
 
   def index
@@ -44,11 +46,6 @@ class WelcomeController < ApplicationController
     # @todos = Todo.where(user_id: current_user.id, todo_status_id: ApplicationHelper::TODO_STATUS_NEW).order(:id)
     @todos = Todo.where(todo_status_id: ApplicationHelper::TODO_STATUS_NEW).order(due_date: :desc)
 
-    # All customers
-    if params[:include_all_customers]
-      @all_customers = Customer.all
-    end
-
     # @hash3 = {}
     # Activity.all do |activity|
     #   if activity.schedule_latitude && activity.schedule_longitude
@@ -71,32 +68,38 @@ class WelcomeController < ApplicationController
 
   # for staff
   def today_activities
+    @request_to_path = welcome_today_activities_path
     get_today_activities
     render 'activities_for_staff'
   end
 
   def this_week_activities
+    @request_to_path = welcome_this_week_activities_path
     get_activities_for_staff((Date.today - (Date.today.wday - 1)).beginning_of_day, ((Date.today - (Date.today.wday - 1)) + 6).end_of_day)
     render 'activities_for_staff'
   end
 
   def this_month_activities
+    @request_to_path = welcome_this_month_activities_path
     get_activities_for_staff(Date.today.beginning_of_month.beginning_of_day, Date.today.end_of_month.end_of_day)
     render 'activities_for_staff'
   end
 
   # for manager
   def today_activities_for_manager
+    @request_to_path = welcome_today_activities_for_manager_path
     get_today_activities_for_manager
     render 'activities_for_manager'
   end
 
   def this_week_activities_for_manager
+    @request_to_path = welcome_this_week_activities_for_manager_path
     get_activities_for_manager((Date.today - (Date.today.wday - 1)).beginning_of_day, ((Date.today - (Date.today.wday - 1)) + 6).end_of_day)
     render 'activities_for_manager'
   end
 
   def this_month_activities_for_manager
+    @request_to_path = welcome_this_month_activities_for_manager_path
     get_activities_for_manager(Date.today.beginning_of_month.beginning_of_day, Date.today.end_of_month.end_of_day)
     render 'activities_for_manager'
   end
@@ -120,5 +123,21 @@ class WelcomeController < ApplicationController
 
     def get_today_activities_for_manager
       get_activities_for_manager(Date.today.beginning_of_day, Date.today.end_of_day)
+    end
+
+    def get_all_customers
+      # All customers
+      if params[:include_all_customers].blank?
+        @include_all_customers = session[:include_all_customers]
+      else
+        @include_all_customers = params[:include_all_customers]
+      end
+      
+      if @include_all_customers == "true" || @include_all_customers == true
+        @all_customers = Customer.all
+        session[:include_all_customers] = true
+      else
+        session[:include_all_customers] = false
+      end
     end
 end

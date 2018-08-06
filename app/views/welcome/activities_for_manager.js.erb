@@ -1,5 +1,6 @@
 $('#activities_for_manager').html("<%= j (render 'activities_for_manager_tmpl') %>");
 
+window.request_to_path='<%=@request_to_path%>';
 
 
 // Today's activities for all users (for manager)
@@ -39,4 +40,28 @@ function initMap_for_manager() {
     <% end %>
     return map;
 }
-initMap_for_manager();
+window.map = initMap_for_manager();
+
+    <% if @all_customers %>
+      <% @all_customers.each_with_index do |customer, index| %>
+        <% if customer.latitude && customer.longitude %>
+          var image<%=customer.id%> = '<%=image_path('clock.png')%>';
+          var marker<%=customer.id%> = new google.maps.Marker({
+              position: new google.maps.LatLng(<%=customer.latitude%>, <%=customer.longitude%>),
+              map: window.map
+          });
+          var content<%=customer.id%> = "";
+          content<%=customer.id%> = "<h4><%=customer.company_name%></h4>"
+            + '<%= link_to "Detail", customer_path(customer), class: "btn btn-xs btn-primary", :target=>["_blank"] %>'
+            + '';
+          
+          var infowindow<%=customer.id%> = new google.maps.InfoWindow({
+              content: content<%=customer.id%>,
+              maxWidth: 200
+          });
+          google.maps.event.addListener(marker<%=customer.id%>, 'click', function() {
+              infowindow<%=customer.id%>.open(window.map,marker<%=customer.id%>);
+          });
+        <% end %>
+      <% end %>
+    <% end %>
